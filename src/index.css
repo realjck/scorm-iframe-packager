@@ -79,21 +79,12 @@
 
 /* Custom styles for SCORM Packager */
 .iframe-preview {
-  border: none;
+  border: 2px dotted #0066ff;
   min-height: 400px;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .preview-header {
-  background-color: #f8f9fa;
-  padding: 10px 16px;
-  border-bottom: 1px solid #eaeaea;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.button-modern {
-  @apply rounded-md px-4 py-2 font-medium transition-all duration-200;
-  @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white;
-  @apply hover:shadow-md hover:from-blue-700 hover:to-blue-800;
-  @apply focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }

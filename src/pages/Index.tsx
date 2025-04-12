@@ -66,10 +66,10 @@ const Index = () => {
       <div className="container mx-auto p-4">
         <ResizablePanelGroup
           direction="horizontal"
-          className="h-[calc(100vh-2rem)] rounded-lg shadow-md overflow-hidden"
+          className="h-[calc(100vh-2rem)] rounded-lg border"
         >
           {/* Left panel: SCORM Configuration Form */}
-          <ResizablePanel defaultSize={50} minSize={30} className="bg-gray-800 text-white overflow-auto">
+          <ResizablePanel defaultSize={50} minSize={30} className="bg-gray-100 overflow-auto">
             <ScormForm 
               formData={formData}
               onChange={handleFormChange}
@@ -77,7 +77,7 @@ const Index = () => {
             />
           </ResizablePanel>
           
-          <ResizableHandle withHandle className="bg-gray-600 hover:bg-gray-500 transition-colors" />
+          <ResizableHandle withHandle className="bg-gray-200 hover:bg-gray-300 transition-colors" />
           
           {/* Right panel: Live Preview */}
           <ResizablePanel defaultSize={50} minSize={30} className="bg-white">
