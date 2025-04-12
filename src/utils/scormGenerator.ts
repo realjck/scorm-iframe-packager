@@ -134,6 +134,12 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     .hidden {
       display: none;
     }
+    .status {
+      margin-left: 10px;
+      font-size: 12px;
+      font-style: italic;
+      color: #777;
+    }
   </style>
 </head>
 <body>
@@ -142,6 +148,7 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       <span>Veuillez entrer le code donné en fin d'activité :</span>
       <input type="text" id="completion-code">
       <button id="validate-btn">Valider</button>
+      <span id="status-indicator" class="status">Status: incomplete</span>
     </div>
     
     <div id="alert" class="alert hidden"></div>
@@ -166,6 +173,7 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     const validateBtn = document.getElementById('validate-btn');
     const codeInput = document.getElementById('completion-code');
     const alertEl = document.getElementById('alert');
+    const statusIndicator = document.getElementById('status-indicator');
     
     // Initialize content
     window.addEventListener('DOMContentLoaded', () => {
@@ -176,6 +184,9 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
           doc.write(\`${iframeContent.replace(/`/g, '\\`')}\`);
           doc.close();`
       }
+      
+      // Update status indicator
+      updateStatusIndicator('incomplete');
     });
     
     // Handle validation
@@ -184,6 +195,7 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       
       if (validateCompletionCode(enteredCode, correctCode)) {
         isCompleted = true;
+        updateStatusIndicator('completed');
         showAlert("${endMessage || 'Félicitations ! Vous avez terminé ce module.'}", true);
         contentFrame.classList.add('hidden');
         completionSection.classList.remove('hidden');
@@ -204,6 +216,10 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
           alertEl.classList.add('hidden');
         }, 3000);
       }
+    }
+    
+    function updateStatusIndicator(status) {
+      statusIndicator.textContent = 'Status: ' + status;
     }
   </script>
 </body>

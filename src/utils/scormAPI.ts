@@ -35,6 +35,8 @@ function initializeSCORM() {
   const api = getAPI();
   if (api) {
     api.LMSInitialize("");
+    // Set initial status to "incomplete"
+    api.LMSSetValue("cmi.core.lesson_status", "incomplete");
     // Set session start time
     sessionStartTime = new Date();
     // Start tracking time
@@ -141,6 +143,9 @@ function initializeSCORM() {
   const api = getAPI();
   if (api) {
     api.Initialize("");
+    // Set initial status to "incomplete"
+    api.SetValue("cmi.completion_status", "incomplete");
+    api.SetValue("cmi.success_status", "unknown");
     // Set session start time
     sessionStartTime = new Date();
     // Start tracking time

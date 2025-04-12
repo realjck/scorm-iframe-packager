@@ -15,10 +15,12 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [status, setStatus] = useState('incomplete');
 
   const handleValidate = () => {
     if (enteredCode === formData.completionCode) {
       setIsCompleted(true);
+      setStatus('completed');
       setShowAlert(true);
       setAlertMessage(formData.endMessage || "Félicitations! Vous avez terminé ce module.");
     } else {
@@ -63,6 +65,9 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
   // Render iframe content whenever it changes
   useEffect(() => {
     renderIframeContent();
+    // Reset status to incomplete when content changes
+    setStatus('incomplete');
+    setIsCompleted(false);
   }, [formData.iframeContent]);
 
   return (
@@ -82,6 +87,9 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
         >
           Valider
         </Button>
+        <span className="ml-3 text-xs italic text-gray-500">
+          Status: {status}
+        </span>
       </div>
       
       {showAlert && (
