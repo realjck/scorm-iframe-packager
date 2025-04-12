@@ -14,6 +14,42 @@ const isUrl = (str: string) => {
   }
 };
 
+// Helper function to get all SCORM 1.2 XSD files
+const getScorm12XsdFiles = async () => {
+  const xsdFiles = [
+    'adlcp_rootv1p2.xsd',
+    'ims_xml.xsd',
+    'imscp_rootv1p1p2.xsd',
+    'imsmd_rootv1p2p1.xsd'
+  ];
+  
+  const filePromises = xsdFiles.map(async (file) => {
+    const response = await fetch(`/src/xsd/scorm12/${file}`);
+    return { name: file, content: await response.text() };
+  });
+  
+  return Promise.all(filePromises);
+};
+
+// Helper function to get all SCORM 2004 XSD files
+const getScorm2004XsdFiles = async () => {
+  const xsdFiles = [
+    'adlcp_v1p3.xsd',
+    'adlnav_v1p3.xsd',
+    'adlseq_v1p3.xsd',
+    'imscp_v1p1.xsd',
+    'imsss_v1p0.xsd',
+    'xml.xsd'
+  ];
+  
+  const filePromises = xsdFiles.map(async (file) => {
+    const response = await fetch(`/src/xsd/scorm2004/${file}`);
+    return { name: file, content: await response.text() };
+  });
+  
+  return Promise.all(filePromises);
+};
+
 // Generate SCORM package index.html content
 export const generateIndexHtml = (formData: ScormFormData): string => {
   const { title, iframeContent, completionCode, endMessage, scormVersion } = formData;
@@ -190,6 +226,38 @@ export const generateScormPackage = async (formData: ScormFormData): Promise<voi
       : generateScorm2004Manifest(formData);
     
     zip.file("imsmanifest.xml", manifest);
+    
+    // Add XSD files based on SCORM version
+    if (formData.scormVersion === "1.2") {
+      try {
+        const xsdFiles = await getScorm12XsdFiles();
+        xsdFiles.forEach(file => {
+          zip.file(file.name, file.content);
+        });
+      } catch (error) {
+        console.error("Error loading SCORM 1.2 XSD files:", error);
+      }
+    } else {
+      try {
+        const xsdFiles = await getScorm2004XsdFiles();
+        xsdFiles.forEach(file => {
+          zip.file(file.name, file.content);
+        });
+        
+        // Create subdirectories for SCORM 2004
+        const folders = ['common', 'extend', 'unique', 'vocab'];
+        folders.forEach(folder => {
+          zip.folder(folder); // Create empty folders as seen in the provided image
+        });
+        
+        // Additional DTD files
+        zip.file("datatypes.dtd", "<!-- SCORM 2004 datatypes DTD -->");
+        zip.file("XMLSchema.dtd", "<!-- SCORM 2004 XMLSchema DTD -->");
+        
+      } catch (error) {
+        console.error("Error loading SCORM 2004 XSD files:", error);
+      }
+    }
     
     // Generate the zip file
     const content = await zip.generateAsync({ type: "blob" });

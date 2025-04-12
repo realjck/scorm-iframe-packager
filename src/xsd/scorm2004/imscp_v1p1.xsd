@@ -1,0 +1,116 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file represents the IMS Content Packaging specification for SCORM 2004 4th Edition.
+-->
+<xs:schema targetNamespace="http://www.imsglobal.org/xsd/imscp_v1p1" 
+           xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified" 
+           version="IMS CP 1.1.4">
+
+    <xs:annotation>
+        <xs:documentation>
+            IMS Content Packaging XML Binding
+            Copyright (c) 2001-2005 IMS Global Learning Consortium, Inc.
+            All Rights Reserved.
+        </xs:documentation>
+    </xs:annotation>
+
+    <!-- Element Definitions -->
+    <xs:element name="manifest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="metadata" minOccurs="0"/>
+                <xs:element ref="organizations"/>
+                <xs:element ref="resources"/>
+                <xs:element ref="manifest" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="identifier" type="xs:ID" use="required"/>
+            <xs:attribute name="version" type="xs:string" use="optional"/>
+            <xs:attribute name="base" type="xs:anyURI" use="optional"/>
+            <xs:attributeGroup ref="xml:specialAttrs"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="metadata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="schema" type="xs:string" minOccurs="0"/>
+                <xs:element name="schemaversion" type="xs:string" minOccurs="0"/>
+                <xs:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="organizations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="organization" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="default" type="xs:IDREF" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="organization">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title" type="xs:string"/>
+                <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element name="item" minOccurs="0" maxOccurs="unbounded"/>
+                            <xs:element ref="metadata" minOccurs="0"/>
+                        </xs:sequence>
+                        <xs:attribute name="identifier" type="xs:ID" use="required"/>
+                        <xs:attribute name="identifierref" type="xs:string" use="optional"/>
+                        <xs:attribute name="isvisible" type="xs:boolean" default="true"/>
+                        <xs:attribute name="parameters" type="xs:string" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="metadata" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="identifier" type="xs:ID" use="required"/>
+            <xs:attribute name="structure" type="xs:string" default="hierarchical"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="resources">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resource" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="metadata" minOccurs="0"/>
+                            <xs:element name="file" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="href" type="xs:anyURI" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="dependency" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="identifierref" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="identifier" type="xs:ID" use="required"/>
+                        <xs:attribute name="type" type="xs:string" use="required"/>
+                        <xs:attribute name="href" type="xs:anyURI" use="optional"/>
+                        <xs:attribute name="base" type="xs:anyURI" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- XML namespace support -->
+    <xs:attributeGroup name="xml:specialAttrs">
+        <xs:attribute ref="xml:base"/>
+        <xs:attribute ref="xml:lang"/>
+    </xs:attributeGroup>
+    
+    <!-- XML namespace reference -->
+    <xs:attribute name="lang" type="xs:language"/>
+    <xs:attribute name="base" type="xs:anyURI"/>
+</xs:schema>

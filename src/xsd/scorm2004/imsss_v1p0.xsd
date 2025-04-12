@@ -1,0 +1,289 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file represents the IMS Simple Sequencing specification for SCORM 2004 4th Edition.
+-->
+<xs:schema targetNamespace="http://www.imsglobal.org/xsd/imsss" 
+           xmlns="http://www.imsglobal.org/xsd/imsss" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           version="IMS SS 1.0">
+
+    <xs:annotation>
+        <xs:documentation>
+            IMS Simple Sequencing XML Binding
+            Copyright (c) 2003-2006 IMS Global Learning Consortium, Inc.
+            All Rights Reserved.
+        </xs:documentation>
+    </xs:annotation>
+
+    <!-- Simple Sequencing Elements -->
+    <xs:element name="sequencing">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="controlMode" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:attribute name="choice" type="xs:boolean" default="true"/>
+                        <xs:attribute name="choiceExit" type="xs:boolean" default="true"/>
+                        <xs:attribute name="flow" type="xs:boolean" default="false"/>
+                        <xs:attribute name="forwardOnly" type="xs:boolean" default="false"/>
+                        <xs:attribute name="useCurrentAttemptObjectiveInfo" type="xs:boolean" default="true"/>
+                        <xs:attribute name="useCurrentAttemptProgressInfo" type="xs:boolean" default="true"/>
+                    </xs:complexType>
+                </xs:element>
+                
+                <xs:element name="sequencingRules" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="preConditionRule" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ruleConditions">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="ruleCondition" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="condition">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="satisfied"/>
+                                                                        <xs:enumeration value="objectiveStatusKnown"/>
+                                                                        <xs:enumeration value="objectiveMeasureKnown"/>
+                                                                        <xs:enumeration value="objectiveMeasureGreaterThan"/>
+                                                                        <xs:enumeration value="objectiveMeasureLessThan"/>
+                                                                        <xs:enumeration value="completed"/>
+                                                                        <xs:enumeration value="activityProgressKnown"/>
+                                                                        <xs:enumeration value="attempted"/>
+                                                                        <xs:enumeration value="attemptLimitExceeded"/>
+                                                                        <xs:enumeration value="timeLimitExceeded"/>
+                                                                        <xs:enumeration value="outsideAvailableTimeRange"/>
+                                                                        <xs:enumeration value="always"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                            <xs:attribute name="referencedObjective" type="xs:string"/>
+                                                            <xs:attribute name="measureThreshold" type="xs:float"/>
+                                                            <xs:attribute name="operator" default="noOp">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="not"/>
+                                                                        <xs:enumeration value="noOp"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="conditionCombination" default="all">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="all"/>
+                                                            <xs:enumeration value="any"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="ruleAction">
+                                            <xs:complexType>
+                                                <xs:attribute name="action" use="required">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="skip"/>
+                                                            <xs:enumeration value="disabled"/>
+                                                            <xs:enumeration value="hiddenFromChoice"/>
+                                                            <xs:enumeration value="stopForwardTraversal"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            
+                            <xs:element name="exitConditionRule" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ruleConditions">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="ruleCondition" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="condition">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="satisfied"/>
+                                                                        <xs:enumeration value="objectiveStatusKnown"/>
+                                                                        <xs:enumeration value="objectiveMeasureKnown"/>
+                                                                        <xs:enumeration value="objectiveMeasureGreaterThan"/>
+                                                                        <xs:enumeration value="objectiveMeasureLessThan"/>
+                                                                        <xs:enumeration value="completed"/>
+                                                                        <xs:enumeration value="activityProgressKnown"/>
+                                                                        <xs:enumeration value="attempted"/>
+                                                                        <xs:enumeration value="attemptLimitExceeded"/>
+                                                                        <xs:enumeration value="timeLimitExceeded"/>
+                                                                        <xs:enumeration value="outsideAvailableTimeRange"/>
+                                                                        <xs:enumeration value="always"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                            <xs:attribute name="referencedObjective" type="xs:string"/>
+                                                            <xs:attribute name="measureThreshold" type="xs:float"/>
+                                                            <xs:attribute name="operator" default="noOp">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="not"/>
+                                                                        <xs:enumeration value="noOp"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="conditionCombination" default="all">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="all"/>
+                                                            <xs:enumeration value="any"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="ruleAction">
+                                            <xs:complexType>
+                                                <xs:attribute name="action" use="required">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="exit"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            
+                            <xs:element name="postConditionRule" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ruleConditions">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="ruleCondition" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="condition">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="satisfied"/>
+                                                                        <xs:enumeration value="objectiveStatusKnown"/>
+                                                                        <xs:enumeration value="objectiveMeasureKnown"/>
+                                                                        <xs:enumeration value="objectiveMeasureGreaterThan"/>
+                                                                        <xs:enumeration value="objectiveMeasureLessThan"/>
+                                                                        <xs:enumeration value="completed"/>
+                                                                        <xs:enumeration value="activityProgressKnown"/>
+                                                                        <xs:enumeration value="attempted"/>
+                                                                        <xs:enumeration value="attemptLimitExceeded"/>
+                                                                        <xs:enumeration value="timeLimitExceeded"/>
+                                                                        <xs:enumeration value="outsideAvailableTimeRange"/>
+                                                                        <xs:enumeration value="always"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                            <xs:attribute name="referencedObjective" type="xs:string"/>
+                                                            <xs:attribute name="measureThreshold" type="xs:float"/>
+                                                            <xs:attribute name="operator" default="noOp">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="not"/>
+                                                                        <xs:enumeration value="noOp"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="conditionCombination" default="all">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="all"/>
+                                                            <xs:enumeration value="any"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="ruleAction">
+                                            <xs:complexType>
+                                                <xs:attribute name="action" use="required">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="exitParent"/>
+                                                            <xs:enumeration value="exitAll"/>
+                                                            <xs:enumeration value="retry"/>
+                                                            <xs:enumeration value="retryAll"/>
+                                                            <xs:enumeration value="continue"/>
+                                                            <xs:enumeration value="previous"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                
+                <xs:element name="objectives" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="primaryObjective" minOccurs="0" maxOccurs="1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="mapInfo" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="targetObjectiveID" type="xs:string" use="required"/>
+                                                <xs:attribute name="readSatisfiedStatus" type="xs:boolean" default="true"/>
+                                                <xs:attribute name="readNormalizedMeasure" type="xs:boolean" default="true"/>
+                                                <xs:attribute name="writeSatisfiedStatus" type="xs:boolean" default="false"/>
+                                                <xs:attribute name="writeNormalizedMeasure" type="xs:boolean" default="false"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="objectiveID" type="xs:string"/>
+                                    <xs:attribute name="satisfiedByMeasure" type="xs:boolean" default="false"/>
+                                    <xs:attribute name="minNormalizedMeasure" type="xs:decimal" default="1.0"/>
+                                </xs:complexType>
+                            </xs:element>
+                            
+                            <xs:element name="objective" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="mapInfo" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="targetObjectiveID" type="xs:string" use="required"/>
+                                                <xs:attribute name="readSatisfiedStatus" type="xs:boolean" default="true"/>
+                                                <xs:attribute name="readNormalizedMeasure" type="xs:boolean" default="true"/>
+                                                <xs:attribute name="writeSatisfiedStatus" type="xs:boolean" default="false"/>
+                                                <xs:attribute name="writeNormalizedMeasure" type="xs:boolean" default="false"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="objectiveID" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                
+                <!-- Additional elements omitted for brevity -->
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID"/>
+            <xs:attribute name="IDRef" type="xs:IDREF"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

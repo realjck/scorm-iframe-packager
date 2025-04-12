@@ -1,0 +1,164 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by ADLNET (ADLNET) -->
+<!--
+This is the IMS Content Packaging 1.1.2 Reference Schema. This file should
+accompany the IMS Content Packaging 1.1.2 XML Binding document available at:
+http://www.imsglobal.org/content/packaging/
+
+Note: This IMS CP schema has been modified by ADL to enforce the inclusion of the SCORM 
+required Manifest Resource metadata elements.
+-->
+<xsd:schema targetNamespace="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" elementFormDefault="unqualified" version="IMS CP 1.1.2">
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="ims_xml.xsd"/>
+	<xsd:import namespace="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" schemaLocation="imsmd_rootv1p2p1.xsd"/>
+	<xsd:import namespace="http://www.adlnet.org/xsd/adlcp_rootv1p2" schemaLocation="adlcp_rootv1p2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+			IMS Content Packaging 1.1.2 XML Binding
+			Copyright (c) 2001 IMS Global Learning Consortium, Inc.
+			All Rights Reserved.
+			
+			IMS Version 1.1.2 - ADL Modified.
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--****************-->
+	<!--*Complex Types*-->
+	<!--***************-->
+	<xsd:complexType name="organizationsType">
+		<xsd:sequence>
+			<xsd:element ref="organization" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="default" type="xsd:IDREF" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="organizationType">
+		<xsd:sequence>
+			<xsd:element ref="title"/>
+			<xsd:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="metadata" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="identifier" type="xsd:ID" use="required"/>
+		<xsd:attribute name="structure" type="xsd:string" use="optional" default="hierarchical"/>
+	</xsd:complexType>
+	<xsd:complexType name="itemType">
+		<xsd:sequence>
+			<xsd:element ref="title" minOccurs="0"/>
+			<xsd:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="metadata" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="identifier" type="xsd:ID" use="required"/>
+		<xsd:attribute name="identifierref" type="xsd:string" use="optional"/>
+		<xsd:attribute name="isvisible" type="xsd:boolean" use="optional" default="true"/>
+		<xsd:attribute ref="adlcp:prerequisites" use="optional"/>
+		<xsd:attribute ref="adlcp:maxtimeallowed" use="optional"/>
+		<xsd:attribute ref="adlcp:timelimitaction" use="optional"/>
+		<xsd:attribute ref="adlcp:datafromlms" use="optional"/>
+		<xsd:attribute ref="adlcp:masteryscore" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="titleType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attributeGroup ref="attGroup.language"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="metadataType">
+		<xsd:sequence>
+			<xsd:element ref="schema" minOccurs="0"/>
+			<xsd:element ref="schemaversion" minOccurs="0"/>
+			<xsd:group ref="grp.any" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="resourceType">
+		<xsd:sequence>
+			<xsd:element ref="metadata" minOccurs="0"/>
+			<xsd:element ref="file" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="dependency" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="identifier" type="xsd:ID" use="required"/>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+		<xsd:attribute ref="adlcp:scormtype" use="optional"/>
+		<xsd:attribute name="href" type="xsd:string" use="optional"/>
+		<xsd:attributeGroup ref="attGroup.resources"/>
+	</xsd:complexType>
+	<xsd:complexType name="fileType">
+		<xsd:attribute name="href" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="dependencyType">
+		<xsd:attribute name="identifierref" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="manifestType">
+		<xsd:sequence>
+			<xsd:element ref="metadata" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="organizations"/>
+			<xsd:element ref="resources"/>
+			<xsd:element ref="manifest" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="identifier" type="xsd:ID" use="required"/>
+		<xsd:attribute name="version" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="resourcesType">
+		<xsd:sequence>
+			<xsd:element ref="resource" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="schemaType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="schemaversionType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!--********************-->
+	<!--*Attribute Groups*-->
+	<!--*******************-->
+	<xsd:attributeGroup name="attGroup.language">
+		<xsd:attribute ref="xml:lang" use="optional"/>
+	</xsd:attributeGroup>
+	<xsd:attributeGroup name="attGroup.resources">
+		<xsd:attribute name="xml:base" type="xsd:anyURI" use="optional"/>
+	</xsd:attributeGroup>
+	<xsd:attributeGroup name="grpReqResourcesAtt">
+		<xsd:attribute name="identifier" type="xsd:ID" use="required"/>
+	</xsd:attributeGroup>
+	<!--***************-->
+	<!--*General Groups*-->
+	<!--***************-->
+	<xsd:group name="grp.any">
+		<xsd:choice>
+			<xsd:group ref="grp.imsmd"/>
+		</xsd:choice>
+	</xsd:group>
+	<xsd:group name="grp.imsmd">
+		<xsd:choice>
+			<xsd:element ref="imsmd:lom"/>
+		</xsd:choice>
+	</xsd:group>
+	<!--*******-->
+	<!--*Manifest*-->
+	<!--*******-->
+	<xsd:element name="manifest" type="manifestType"/>
+	<!--*******-->
+	<!--*Metadata*-->
+	<!--*******-->
+	<xsd:element name="metadata" type="metadataType"/>
+	<xsd:element name="schema" type="schemaType"/>
+	<xsd:element name="schemaversion" type="schemaversionType"/>
+	<!--*********-->
+	<!--*Organizations*-->
+	<!--*********-->
+	<xsd:element name="organizations" type="organizationsType"/>
+	<xsd:element name="organization" type="organizationType"/>
+	<xsd:element name="title" type="titleType"/>
+	<xsd:element name="item" type="itemType"/>
+	<!--*********-->
+	<!--*Resources*-->
+	<!--*********-->
+	<xsd:element name="resources" type="resourcesType"/>
+	<xsd:element name="resource" type="resourceType"/>
+	<xsd:element name="file" type="fileType"/>
+	<xsd:element name="dependency" type="dependencyType"/>
+</xsd:schema>

@@ -1,0 +1,17 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file represents the xml namespace definition for SCORM 2004 4th Edition.
+-->
+<xs:schema targetNamespace="http://www.w3.org/XML/1998/namespace" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified">
+    
+    <xs:attribute name="lang" type="xs:language"/>
+    <xs:attribute name="base" type="xs:anyURI"/>
+    
+    <xs:attributeGroup name="specialAttrs">
+        <xs:attribute ref="xml:base"/>
+        <xs:attribute ref="xml:lang"/>
+    </xs:attributeGroup>
+</xs:schema>

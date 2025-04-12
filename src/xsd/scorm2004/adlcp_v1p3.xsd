@@ -1,0 +1,48 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file represents the SCORM 2004 4th Edition Content Aggregation Model (CAM) components.
+These components represent the core Sequencing and Navigation (SN) aspect of the content model.
+-->
+<xs:schema targetNamespace="http://www.adlnet.org/xsd/adlcp_v1p3" 
+           xmlns="http://www.adlnet.org/xsd/adlcp_v1p3" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified" 
+           version="ADL SCORM 2004 4th Edition">
+
+    <xs:annotation>
+        <xs:documentation>
+            This file represents the SCORM 2004 4th Edition Content Aggregation Model (CAM) components.
+        </xs:documentation>
+    </xs:annotation>
+
+    <!-- Core SCORM Content Package Extensions -->
+    <xs:element name="location" type="xs:string"/>
+    <xs:element name="prerequisites" type="xs:string"/>
+    <xs:element name="maxtimeallowed" type="xs:string"/>
+    <xs:element name="timelimitaction" type="xs:string"/>
+    <xs:element name="datafromlms" type="xs:string"/>
+    <xs:element name="masteryscore" type="xs:string"/>
+    <xs:element name="completionThreshold" type="xs:string"/>
+    
+    <!-- SCORM Components -->
+    <xs:attribute name="scormType">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="sco"/>
+                <xs:enumeration value="asset"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+
+    <!-- Metadata -->
+    <xs:element name="metadata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="schema" type="xs:string" fixed="ADL SCORM"/>
+                <xs:element name="schemaversion" type="xs:string" fixed="2004 4th Edition"/>
+                <xs:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
