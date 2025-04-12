@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -29,7 +28,7 @@ const ScormForm = ({ formData, onChange, onDownload }: ScormFormProps) => {
           <RadioGroup
             name="scormVersion"
             value={formData.scormVersion}
-            onValueChange={(value) => onChange({ scormVersion: value })}
+            onValueChange={(value: "1.2" | "2004") => onChange({ scormVersion: value })}
             className="flex flex-col space-y-2"
           >
             <div className="flex items-center space-x-2">
