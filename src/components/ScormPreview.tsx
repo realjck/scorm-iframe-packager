@@ -82,7 +82,7 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
         />
         <Button 
           onClick={handleValidate} 
-          className="bg-black hover:bg-gray-800"
+          variant="default"
           disabled={isCompleted}
         >
           Valider
@@ -99,7 +99,7 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
       )}
       
       {isCompleted ? (
-        <div className="flex-1 p-6 flex items-center justify-center border-4 border-dotted border-green-300">
+        <div className="flex-1 p-6 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Module terminé</h2>
             <p className="text-gray-600">{formData.endMessage}</p>
