@@ -75,12 +75,20 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 }
 
 /* Custom styles for SCORM Packager */
 .iframe-preview {
-  border: 2px dotted #0066ff;
-  min-height: 400px;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .preview-header {
@@ -88,3 +96,4 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
+

@@ -6,6 +6,7 @@ import { ScormFormData } from '@/types/scorm';
 import { generateScormPackage } from '@/utils/scormGenerator';
 import { toast } from '@/hooks/use-toast';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Index = () => {
   const [formData, setFormData] = useState<ScormFormData>({
@@ -62,19 +63,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto p-4">
+    <div className="h-screen flex flex-col">
+      <div className="flex-1 overflow-hidden">
         <ResizablePanelGroup
           direction="horizontal"
-          className="h-[calc(100vh-2rem)] rounded-lg border"
+          className="h-full rounded-lg border"
         >
-          {/* Left panel: SCORM Configuration Form */}
-          <ResizablePanel defaultSize={50} minSize={30} className="bg-gray-100 overflow-auto">
-            <ScormForm 
-              formData={formData}
-              onChange={handleFormChange}
-              onDownload={handleDownload}
-            />
+          {/* Left panel: SCORM Configuration Form with ScrollArea */}
+          <ResizablePanel defaultSize={50} minSize={30} className="bg-gray-100">
+            <ScrollArea className="h-full">
+              <ScormForm 
+                formData={formData}
+                onChange={handleFormChange}
+                onDownload={handleDownload}
+              />
+            </ScrollArea>
           </ResizablePanel>
           
           <ResizableHandle withHandle className="bg-gray-200 hover:bg-gray-300 transition-colors" />
