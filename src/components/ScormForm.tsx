@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -11,16 +12,22 @@ interface ScormFormProps {
   formData: ScormFormData;
   onChange: (data: Partial<ScormFormData>) => void;
   onDownload: () => void;
-  onReset: () => void;
 }
 
-const ScormForm = ({ formData, onChange, onDownload, onReset }: ScormFormProps) => {
+const ScormForm = ({ formData, onChange, onDownload }: ScormFormProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange({ [e.target.name]: e.target.value });
   };
 
   const handleReloadIframe = () => {
-    onReset();
+    // Reset iframe content by temporarily clearing it and then setting it back
+    const currentContent = formData.iframeContent;
+    onChange({ iframeContent: "" });
+    
+    // Use setTimeout to ensure the state update is processed before setting it back
+    setTimeout(() => {
+      onChange({ iframeContent: currentContent });
+    }, 50);
   };
 
   return (
@@ -75,7 +82,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset }: ScormFormProps) 
               size="icon"
               onClick={handleReloadIframe}
               title="Recharger"
-              className="h-8 w-8 border-gray-300 hover:bg-black hover:text-white"
+              className="h-8 w-8 border-gray-300 hover:bg-gray-200"
             >
               <RefreshCw size={16} />
             </Button>

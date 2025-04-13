@@ -8,33 +8,21 @@ import { toast } from '@/hooks/use-toast';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const defaultFormData: ScormFormData = {
-  scormVersion: "1.2",
-  title: "",
-  duration: "",
-  iframeContent: "",
-  completionCode: "",
-  endMessage: ""
-};
-
 const Index = () => {
-  const [formData, setFormData] = useState<ScormFormData>(defaultFormData);
+  const [formData, setFormData] = useState<ScormFormData>({
+    scormVersion: "1.2",
+    title: "",
+    duration: "",
+    iframeContent: "",
+    completionCode: "",
+    endMessage: ""
+  });
 
   const handleFormChange = (data: Partial<ScormFormData>) => {
     setFormData(prevData => ({
       ...prevData,
       ...data
     }));
-  };
-
-  const handleReset = () => {
-    // Reset the form data to default values
-    setFormData(defaultFormData);
-
-    toast({
-      title: "Réinitialisation",
-      description: "La page a été réinitialisée avec succès.",
-    });
   };
 
   const handleDownload = async () => {
@@ -88,7 +76,6 @@ const Index = () => {
                 formData={formData}
                 onChange={handleFormChange}
                 onDownload={handleDownload}
-                onReset={handleReset}
               />
             </ScrollArea>
           </ResizablePanel>
