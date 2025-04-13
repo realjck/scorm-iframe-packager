@@ -97,3 +97,12 @@
   border-bottom: 1px solid #ddd;
 }
 
+/* Custom scrollbar styles */
+.black-scrollbar .scrollbar {
+  @apply bg-transparent;
+}
+
+.black-scrollbar .thumb {
+  @apply bg-black rounded-full;
+}
+

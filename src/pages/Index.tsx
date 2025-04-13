@@ -71,7 +71,7 @@ const Index = () => {
         >
           {/* Left panel: SCORM Configuration Form with ScrollArea */}
           <ResizablePanel defaultSize={50} minSize={30} className="bg-gray-100">
-            <ScrollArea className="h-full">
+            <ScrollArea className="h-full black-scrollbar">
               <ScormForm 
                 formData={formData}
                 onChange={handleFormChange}
