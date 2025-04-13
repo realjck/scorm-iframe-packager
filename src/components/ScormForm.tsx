@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Download } from 'lucide-react';
+import { Download, RefreshCw } from 'lucide-react';
 import { ScormFormData } from '@/types/scorm';
 
 interface ScormFormProps {
@@ -16,6 +17,17 @@ interface ScormFormProps {
 const ScormForm = ({ formData, onChange, onDownload }: ScormFormProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange({ [e.target.name]: e.target.value });
+  };
+
+  const handleReloadIframe = () => {
+    // Reset iframe content by temporarily clearing it and then setting it back
+    const currentContent = formData.iframeContent;
+    onChange({ iframeContent: "" });
+    
+    // Use setTimeout to ensure the state update is processed before setting it back
+    setTimeout(() => {
+      onChange({ iframeContent: currentContent });
+    }, 50);
   };
 
   return (
@@ -63,7 +75,18 @@ const ScormForm = ({ formData, onChange, onDownload }: ScormFormProps) => {
         </div>
 
         <div>
-          <Label htmlFor="iframeContent" className="mb-2 block">Contenu de l'iframe :</Label>
+          <div className="flex items-center justify-between mb-2">
+            <Label htmlFor="iframeContent">Contenu de l'iframe :</Label>
+            <Button 
+              variant="outline" 
+              size="icon"
+              onClick={handleReloadIframe}
+              title="Recharger"
+              className="h-8 w-8 border-gray-300 hover:bg-gray-200"
+            >
+              <RefreshCw size={16} />
+            </Button>
+          </div>
           <Textarea
             id="iframeContent"
             name="iframeContent"
