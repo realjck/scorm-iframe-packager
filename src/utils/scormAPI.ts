@@ -97,7 +97,7 @@ window.addEventListener("unload", terminateSCORM);
 
 // Function to check entered code and mark as complete if correct
 function validateCompletionCode(enteredCode, correctCode) {
-  if (enteredCode === correctCode) {
+  if (enteredCode.toLowerCase() === correctCode.toLowerCase()) {
     completeSCO();
     return true;
   }
@@ -206,7 +206,7 @@ window.addEventListener("unload", terminateSCORM);
 
 // Function to check entered code and mark as complete if correct
 function validateCompletionCode(enteredCode, correctCode) {
-  if (enteredCode === correctCode) {
+  if (enteredCode.toLowerCase() === correctCode.toLowerCase()) {
     completeSCO();
     return true;
   }

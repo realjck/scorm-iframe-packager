@@ -18,7 +18,7 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
   const [status, setStatus] = useState('incomplete');
 
   const handleValidate = () => {
-    if (enteredCode === formData.completionCode) {
+    if (enteredCode.toLowerCase() === formData.completionCode.toLowerCase()) {
       setIsCompleted(true);
       setStatus('completed');
       setShowAlert(true);
