@@ -4,5 +4,10 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig({
-  base: '/scorm-iframe-packager/', // 👈 à adapter
-})
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  base: '/scorm-iframe-packager/', // Assurez-vous que cette ligne est présente
+});
