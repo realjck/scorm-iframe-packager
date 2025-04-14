@@ -27,7 +27,10 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
 
   return (
     <div className="p-6 bg-muted rounded-md">
-      <h1 className="text-3xl font-bold mb-6 text-gray-600">SCORM iframe packager</h1>
+      <div className="flex items-center gap-4 mb-6">
+        <img src="./assets/images/icon.png" alt="SCORM Packager Icon" className="w-12 h-12" />
+        <h1 className="text-3xl font-bold text-gray-600">SCORM iframe packager</h1>
+      </div>
       <h2 className="text-1xl mb-6 text-gray-600">Générez facilement un package SCORM avec votre contenu HTML. La partie droite de l'écran affiche le contenu de votre package.</h2>
       <div className="space-y-6">
         <div>
