@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ScormForm from '@/components/ScormForm';
 import ScormPreview from '@/components/ScormPreview';
 import { ScormFormData } from '@/types/scorm';
@@ -8,21 +8,55 @@ import { toast } from '@/hooks/use-toast';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+// Key for storing form data in localStorage
+const STORAGE_KEY = 'scorm_form_data';
+
+// Default form data
+const defaultFormData: ScormFormData = {
+  scormVersion: "1.2",
+  title: "",
+  duration: "",
+  iframeContent: "",
+  completionCode: "",
+  endMessage: ""
+};
+
 const Index = () => {
-  const [formData, setFormData] = useState<ScormFormData>({
-    scormVersion: "1.2",
-    title: "",
-    duration: "",
-    iframeContent: "",
-    completionCode: "",
-    endMessage: ""
-  });
+  const [formData, setFormData] = useState<ScormFormData>(defaultFormData);
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        setFormData(parsedData);
+      } catch (error) {
+        console.error("Failed to parse saved form data:", error);
+        // If parsing fails, use default form data
+        setFormData(defaultFormData);
+      }
+    }
+  }, []);
+
+  // Save data to localStorage whenever formData changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+  }, [formData]);
 
   const handleFormChange = (data: Partial<ScormFormData>) => {
     setFormData(prevData => ({
       ...prevData,
       ...data
     }));
+  };
+
+  const handleReset = () => {
+    setFormData(defaultFormData);
+    toast({
+      title: "Formulaire réinitialisé",
+      description: "Tous les champs ont été réinitialisés à leur valeur par défaut.",
+    });
   };
 
   const handleDownload = async () => {
@@ -76,6 +110,7 @@ const Index = () => {
                 formData={formData}
                 onChange={handleFormChange}
                 onDownload={handleDownload}
+                onReset={handleReset}
               />
             </ScrollArea>
           </ResizablePanel>
