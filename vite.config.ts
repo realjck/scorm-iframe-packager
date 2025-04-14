@@ -1,12 +1,14 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+import path from 'path';
 
 export default defineConfig({
-  base: '/scorm-iframe-packager/',
+  base: '/scorm-iframe-packager/', // Ajoutez le nom de votre dépôt ici
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   build: {
-    rollupOptions: {
-      input: {
-        main: './index.html',
-      }
-    }
-  }
-})
+    outDir: 'dist', // Assurez-vous que cela correspond à votre dossier de sortie
+  },
+});
