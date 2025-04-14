@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScormFormData } from '@/types/scorm';
-import confetti from 'canvas-confetti';
 
 interface ScormPreviewProps {
   formData: ScormFormData;
@@ -34,22 +33,12 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
     reset: resetPreview,
   }));
 
-  const triggerConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.3 },
-      colors: ['#FFD700', '#FFA500', '#FF6B6B', '#4CAF50', '#64B5F6']
-    });
-  };
-
   const handleValidate = () => {
     if (enteredCode.toLowerCase() === formData.completionCode.toLowerCase()) {
       setIsCompleted(true);
       setStatus('completed');
       setShowAlert(true);
       setAlertMessage(formData.endMessage || "Félicitations! Vous avez terminé ce module.");
-      triggerConfetti();
     } else {
       setShowAlert(true);
       setAlertMessage("Code incorrect. Veuillez réessayer.");
