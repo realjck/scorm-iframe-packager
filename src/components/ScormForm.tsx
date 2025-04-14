@@ -27,8 +27,8 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
 
   return (
     <div className="p-6 bg-muted rounded-md">
-      <h1 className="text-4xl font-light mb-6 text-gray-600">SCORM packager</h1>
-      
+      <h1 className="text-3xl font-bold mb-6 text-gray-600">SCORM iframe packager</h1>
+      <h2 className="text-1xl mb-6 text-gray-600">Générez facilement un package SCORM avec votre contenu HTML. La partie droite de l'écran affiche le contenu de votre package.</h2>
       <div className="space-y-6">
         <div>
           <p className="mb-2">Version :</p>
@@ -44,7 +44,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="2004" id="scorm2004" />
-              <Label htmlFor="scorm2004">SCORM 2004</Label>
+              <Label htmlFor="scorm2004">SCORM 2004 (à venir)</Label>
             </div>
           </RadioGroup>
         </div>
@@ -60,7 +60,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         </div>
 
         <div>
-          <Label htmlFor="duration" className="mb-2 block">Durée (ex: 30mn) :</Label>
+          <Label htmlFor="duration" className="mb-2 block">Durée en minutes (ex: 30) :</Label>
           <Input
             id="duration"
             name="duration"
@@ -103,7 +103,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         </div>
 
         <div>
-          <Label htmlFor="endMessage" className="mb-2 block">Message de fin :</Label>
+          <Label htmlFor="endMessage" className="mb-2 block">Message de fin (optionnel) :</Label>
           <Textarea
             id="endMessage"
             name="endMessage"
