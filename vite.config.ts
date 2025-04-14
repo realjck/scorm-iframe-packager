@@ -1,14 +1,13 @@
-import { defineConfig } from 'vite';
-import path from 'path';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: 'https://realjck.github.io/scorm-iframe-packager/', // Ajoutez le nom de votre dépôt ici
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
+  base: '/scorm-iframe-packager/',
   build: {
-    outDir: 'dist', // Assurez-vous que cela correspond à votre dossier de sortie
-  },
-});
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        404: './404.html' // Pour gérer les refresh sur GitHub Pages
+      }
+    }
+  }
+})
