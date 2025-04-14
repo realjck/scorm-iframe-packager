@@ -24,8 +24,14 @@ const getScorm12XsdFiles = async () => {
   ];
   
   const filePromises = xsdFiles.map(async (file) => {
-    const response = await fetch(`/src/xsd/scorm12/${file}`);
-    return { name: file, content: await response.text() };
+    try {
+      const response = await fetch(`${import.meta.env.BASE_URL}xsd/scorm12/${file}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return { name: file, content: await response.text() };
+    } catch (error) {
+      console.warn(`Failed to load ${file}, creating empty file`, error);
+      return { name: file, content: `<?xml version="1.0" encoding="UTF-8"?>\n<!-- ${file} -->` };
+    }
   });
   
   return Promise.all(filePromises);
@@ -83,10 +89,11 @@ const getScorm2004XsdFiles = async () => {
   // Get root files
   const rootFilePromises = rootFiles.map(async (file) => {
     try {
-      const response = await fetch(`/src/xsd/scorm2004/${file}`);
+      const response = await fetch(`${import.meta.env.BASE_URL}xsd/scorm2004/${file}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return { name: file, content: await response.text() };
     } catch (error) {
-      console.warn(`Failed to load ${file}, creating empty file`);
+      console.warn(`Failed to load ${file}, creating empty file`, error);
       const content = file.endsWith('.dtd') 
         ? `<!-- SCORM 2004 ${file} -->`
         : `<?xml version="1.0" encoding="UTF-8"?>\n<!-- ${file} -->`;
@@ -98,13 +105,14 @@ const getScorm2004XsdFiles = async () => {
   const folderFilePromises = Object.entries(folderStructure).flatMap(([folder, files]) =>
     files.map(async (file) => {
       try {
-        const response = await fetch(`/src/xsd/scorm2004/${folder}/${file}`);
+        const response = await fetch(`${import.meta.env.BASE_URL}xsd/scorm2004/${folder}/${file}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return { 
           name: `${folder}/${file}`, 
           content: await response.text() 
         };
       } catch (error) {
-        console.warn(`Failed to load ${folder}/${file}, creating empty file`);
+        console.warn(`Failed to load ${folder}/${file}, creating empty file`, error);
         return { 
           name: `${folder}/${file}`, 
           content: `<?xml version="1.0" encoding="UTF-8"?>\n<!-- ${folder}/${file} -->` 
@@ -332,19 +340,18 @@ export const generateScormPackage = async (formData: ScormFormData): Promise<voi
       }
     }
     
-    // Create subdirectories for SCORM 2004
-    const folders = ['common', 'extend', 'unique', 'vocab'];
-    folders.forEach(folder => {
-      zip.folder(folder); // Create empty folders as seen in the provided image
-    });
+    // Generate the zip file
+    const content = await zip.generateAsync({ type: "blob" });
     
-    // Additional DTD files
-    zip.file("datatypes.dtd", "<!-- SCORM 2004 datatypes DTD -->");
-    zip.file("XMLSchema.dtd", "<!-- SCORM 2004 XMLSchema DTD -->");
+    // Create and trigger download
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(content);
+    downloadLink.download = `${formData.title || 'scorm-package'}.zip`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
     
   } catch (error) {
-    console.error("Error loading SCORM 2004 XSD files:", error);
-    console.error("Error loading SCORM 2004 XSD files:", error);
     console.error("Error generating SCORM package:", error);
     throw error;
   }

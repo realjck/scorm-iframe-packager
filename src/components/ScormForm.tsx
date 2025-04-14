@@ -47,7 +47,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="2004" id="scorm2004" />
-              <Label htmlFor="scorm2004">SCORM 2004 (à venir)</Label>
+              <Label htmlFor="scorm2004">SCORM 2004</Label>
             </div>
           </RadioGroup>
         </div>
