@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ScormForm from '@/components/ScormForm';
 import ScormPreview from '@/components/ScormPreview';
 import { ScormFormData } from '@/types/scorm';
@@ -23,6 +22,7 @@ const defaultFormData: ScormFormData = {
 
 const Index = () => {
   const [formData, setFormData] = useState<ScormFormData>(defaultFormData);
+  const previewRef = useRef<any>(null);
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -33,7 +33,6 @@ const Index = () => {
         setFormData(parsedData);
       } catch (error) {
         console.error("Failed to parse saved form data:", error);
-        // If parsing fails, use default form data
         setFormData(defaultFormData);
       }
     }
@@ -57,6 +56,16 @@ const Index = () => {
       title: "Formulaire réinitialisé",
       description: "Tous les champs ont été réinitialisés à leur valeur par défaut.",
     });
+  };
+
+  const handleResetPreview = () => {
+    if (previewRef.current && previewRef.current.reset) {
+      previewRef.current.reset();
+      toast({
+        title: "Aperçu réinitialisé",
+        description: "L'aperçu a été réinitialisé avec succès.",
+      });
+    }
   };
 
   const handleDownload = async () => {
@@ -111,6 +120,7 @@ const Index = () => {
                 onChange={handleFormChange}
                 onDownload={handleDownload}
                 onReset={handleReset}
+                onResetPreview={handleResetPreview}
               />
             </ScrollArea>
           </ResizablePanel>
@@ -119,7 +129,7 @@ const Index = () => {
           
           {/* Right panel: Live Preview */}
           <ResizablePanel defaultSize={50} minSize={30} className="bg-white">
-            <ScormPreview formData={formData} />
+            <ScormPreview formData={formData} ref={previewRef} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

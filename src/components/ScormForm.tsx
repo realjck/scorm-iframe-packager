@@ -13,16 +13,17 @@ interface ScormFormProps {
   onChange: (data: Partial<ScormFormData>) => void;
   onDownload: () => void;
   onReset: () => void;
+  onResetPreview: () => void;
 }
 
-const ScormForm = ({ formData, onChange, onDownload, onReset }: ScormFormProps) => {
+const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: ScormFormProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange({ [e.target.name]: e.target.value });
   };
 
   const handleReloadIframe = () => {
-    // Now this will reset the entire form
-    onReset();
+    // Now this will only reset the preview part
+    onResetPreview();
   };
 
   return (

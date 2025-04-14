@@ -17,6 +17,27 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [status, setStatus] = useState('incomplete');
 
+  // Function to reset the preview state
+  const resetPreview = () => {
+    setEnteredCode('');
+    setIsCompleted(false);
+    setShowAlert(false);
+    setAlertMessage('');
+    setStatus('incomplete');
+    renderIframeContent();
+  };
+
+  // Expose the reset function to the parent via ref
+  React.useImperativeHandle(
+    // We'll need to access this ref from the parent
+    iframeRef,
+    () => ({
+      reset: resetPreview,
+      // Also expose the original DOM methods
+      ...iframeRef.current
+    })
+  );
+
   const handleValidate = () => {
     if (enteredCode.toLowerCase() === formData.completionCode.toLowerCase()) {
       setIsCompleted(true);
@@ -68,6 +89,7 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
     // Reset status to incomplete when content changes
     setStatus('incomplete');
     setIsCompleted(false);
+    setShowAlert(false);
   }, [formData.iframeContent]);
 
   return (
