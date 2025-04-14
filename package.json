@@ -1,8 +1,9 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "scorm-iframe-packager",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "homepage": "https://realjck.github.io/scorm-iframe-packager",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
