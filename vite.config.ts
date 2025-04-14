@@ -1,13 +1,14 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
+import { defineConfig } from 'vite';
+import path from 'path';
 
 export default defineConfig({
+  base: '/scorm-iframe-packager/', // Ajoutez le nom de votre dépôt ici
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './', // Assurez-vous que cette ligne est présente
+  build: {
+    outDir: 'dist', // Assurez-vous que cela correspond à votre dossier de sortie
+  },
 });
