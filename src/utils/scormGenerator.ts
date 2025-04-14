@@ -33,21 +33,88 @@ const getScorm12XsdFiles = async () => {
 
 // Helper function to get all SCORM 2004 XSD files
 const getScorm2004XsdFiles = async () => {
-  const xsdFiles = [
+  const rootFiles = [
     'adlcp_v1p3.xsd',
     'adlnav_v1p3.xsd',
     'adlseq_v1p3.xsd',
+    'datatypes.dtd',
     'imscp_v1p1.xsd',
     'imsss_v1p0.xsd',
-    'xml.xsd'
+    'imsss_v1p0auxresource.xsd',
+    'imsss_v1p0control.xsd',
+    'imsss_v1p0delivery.xsd',
+    'imsss_v1p0limit.xsd',
+    'imsss_v1p0objective.xsd',
+    'imsss_v1p0random.xsd',
+    'imsss_v1p0rollup.xsd',
+    'imsss_v1p0seqrule.xsd',
+    'imsss_v1p0util.xsd',
+    'ims_xml.xsd',
+    'lom.xsd',
+    'xml.xsd',
+    'XMLSchema.dtd'
   ];
-  
-  const filePromises = xsdFiles.map(async (file) => {
-    const response = await fetch(`/src/xsd/scorm2004/${file}`);
-    return { name: file, content: await response.text() };
+
+  const folderStructure = {
+    common: [
+      'anyElement.xsd',
+      'dataTypes.xsd',
+      'elementNames.xsd',
+      'elementTypes.xsd',
+      'rootElement.xsd',
+      'vocabTypes.xsd',
+      'vocabValues.xsd'
+    ],
+    extend: [
+      'custom.xsd',
+      'strict.xsd'
+    ],
+    unique: [
+      'loose.xsd',
+      'strict.xsd'
+    ],
+    vocab: [
+      'custom.xsd',
+      'loose.xsd',
+      'strict.xsd'
+    ]
+  };
+
+  // Get root files
+  const rootFilePromises = rootFiles.map(async (file) => {
+    try {
+      const response = await fetch(`/src/xsd/scorm2004/${file}`);
+      return { name: file, content: await response.text() };
+    } catch (error) {
+      console.warn(`Failed to load ${file}, creating empty file`);
+      const content = file.endsWith('.dtd') 
+        ? `<!-- SCORM 2004 ${file} -->`
+        : `<?xml version="1.0" encoding="UTF-8"?>\n<!-- ${file} -->`;
+      return { name: file, content };
+    }
   });
-  
-  return Promise.all(filePromises);
+
+  // Get folder files
+  const folderFilePromises = Object.entries(folderStructure).flatMap(([folder, files]) =>
+    files.map(async (file) => {
+      try {
+        const response = await fetch(`/src/xsd/scorm2004/${folder}/${file}`);
+        return { 
+          name: `${folder}/${file}`, 
+          content: await response.text() 
+        };
+      } catch (error) {
+        console.warn(`Failed to load ${folder}/${file}, creating empty file`);
+        return { 
+          name: `${folder}/${file}`, 
+          content: `<?xml version="1.0" encoding="UTF-8"?>\n<!-- ${folder}/${file} -->` 
+        };
+      }
+    })
+  );
+
+  const allFiles = await Promise.all([...rootFilePromises, ...folderFilePromises]);
+  return allFiles;
 };
 
 // Generate SCORM package index.html content
@@ -260,36 +327,24 @@ export const generateScormPackage = async (formData: ScormFormData): Promise<voi
         xsdFiles.forEach(file => {
           zip.file(file.name, file.content);
         });
-        
-        // Create subdirectories for SCORM 2004
-        const folders = ['common', 'extend', 'unique', 'vocab'];
-        folders.forEach(folder => {
-          zip.folder(folder); // Create empty folders as seen in the provided image
-        });
-        
-        // Additional DTD files
-        zip.file("datatypes.dtd", "<!-- SCORM 2004 datatypes DTD -->");
-        zip.file("XMLSchema.dtd", "<!-- SCORM 2004 XMLSchema DTD -->");
-        
       } catch (error) {
         console.error("Error loading SCORM 2004 XSD files:", error);
       }
     }
     
-    // Generate the zip file
-    const content = await zip.generateAsync({ type: "blob" });
+    // Create subdirectories for SCORM 2004
+    const folders = ['common', 'extend', 'unique', 'vocab'];
+    folders.forEach(folder => {
+      zip.folder(folder); // Create empty folders as seen in the provided image
+    });
     
-    // Create a download link
-    const downloadLink = document.createElement("a");
-    downloadLink.href = URL.createObjectURL(content);
-    downloadLink.download = `${formData.title || 'scorm-package'}.zip`;
-    
-    // Trigger the download
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    // Additional DTD files
+    zip.file("datatypes.dtd", "<!-- SCORM 2004 datatypes DTD -->");
+    zip.file("XMLSchema.dtd", "<!-- SCORM 2004 XMLSchema DTD -->");
     
   } catch (error) {
+    console.error("Error loading SCORM 2004 XSD files:", error);
+    console.error("Error loading SCORM 2004 XSD files:", error);
     console.error("Error generating SCORM package:", error);
     throw error;
   }
