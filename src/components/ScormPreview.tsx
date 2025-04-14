@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -9,7 +9,8 @@ interface ScormPreviewProps {
   formData: ScormFormData;
 }
 
-const ScormPreview = ({ formData }: ScormPreviewProps) => {
+// Using forwardRef to allow the component to receive a ref from its parent
+const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
   const [enteredCode, setEnteredCode] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -28,15 +29,9 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
   };
 
   // Expose the reset function to the parent via ref
-  React.useImperativeHandle(
-    // We'll need to access this ref from the parent
-    iframeRef,
-    () => ({
-      reset: resetPreview,
-      // Also expose the original DOM methods
-      ...iframeRef.current
-    })
-  );
+  useImperativeHandle(ref, () => ({
+    reset: resetPreview,
+  }));
 
   const handleValidate = () => {
     if (enteredCode.toLowerCase() === formData.completionCode.toLowerCase()) {
@@ -137,6 +132,8 @@ const ScormPreview = ({ formData }: ScormPreviewProps) => {
       )}
     </div>
   );
-};
+});
+
+ScormPreview.displayName = 'ScormPreview';
 
 export default ScormPreview;
