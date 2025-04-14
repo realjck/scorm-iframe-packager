@@ -6,4 +6,5 @@ export interface ScormFormData {
   iframeContent: string;
   completionCode: string;
   endMessage: string;
+  codePromptMessage: string; // New field
 }

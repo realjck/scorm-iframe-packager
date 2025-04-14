@@ -17,7 +17,8 @@ const defaultFormData: ScormFormData = {
   duration: "",
   iframeContent: "",
   completionCode: "",
-  endMessage: ""
+  endMessage: "",
+  codePromptMessage: "Veuillez entrer le code donné en fin d'activité :" // Default value
 };
 
 const Index = () => {

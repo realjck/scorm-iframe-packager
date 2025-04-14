@@ -90,7 +90,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
   return (
     <div className="h-full flex flex-col">
       <div className="preview-header p-4 flex items-center">
-        <span className="mr-3">Veuillez entrer le code donné en fin d'activité :</span>
+        <span className="mr-3">{formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
         <Input 
           value={enteredCode}
           onChange={(e) => setEnteredCode(e.target.value)}

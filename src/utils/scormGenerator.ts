@@ -51,6 +51,7 @@ const getScorm2004XsdFiles = async () => {
 };
 
 // Generate SCORM package index.html content
+// In the generateIndexHtml function, update the header section:
 export const generateIndexHtml = (formData: ScormFormData): string => {
   const { title, iframeContent, completionCode, endMessage, scormVersion } = formData;
   const scormApi = scormVersion === '1.2' ? scorm12ApiTemplate : scorm2004ApiTemplate;
@@ -145,7 +146,7 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
 <body>
   <div class="container">
     <div class="header">
-      <span>Veuillez entrer le code donné en fin d'activité :</span>
+      <span>${formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
       <input type="text" id="completion-code">
       <button id="validate-btn">Valider</button>
       <span id="status-indicator" class="status">Status: incomplete</span>

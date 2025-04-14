@@ -93,6 +93,17 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         </div>
 
         <div>
+          <Label htmlFor="codePromptMessage" className="mb-2 block">Message de saisie du code :</Label>
+          <Input
+            id="codePromptMessage"
+            name="codePromptMessage"
+            value={formData.codePromptMessage}
+            onChange={handleChange}
+            placeholder="Veuillez entrer le code donné en fin d'activité :"
+          />
+        </div>
+
+        <div>
           <Label htmlFor="completionCode" className="mb-2 block">Code de fin d'activité :</Label>
           <Input
             id="completionCode"
