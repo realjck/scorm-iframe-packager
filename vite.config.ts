@@ -9,5 +9,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/scorm-iframe-packager/', // Assurez-vous que cette ligne est présente
+  base: '/', // Assurez-vous que cette ligne est présente
 });
