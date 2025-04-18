@@ -203,15 +203,18 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       margin: 10px 0;
       border-radius: 4px;
     }
+    .success, .error {
+      color: #000000;
+      margin: 0;
+      padding: 0.9em 0.7em;
+    }
     .success {
-      background-color: #d4edda;
-      border: 1px solid #c3e6cb;
-      color: #155724;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
     }
     .error {
-      background-color: #f8d7da;
-      border: 1px solid #f5c6cb;
-      color: #721c24;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
     }
     .hidden {
       display: none;
@@ -231,7 +234,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       <span>${formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
       <input type="text" id="completion-code">
       <button id="validate-btn">${formData.buttonText || "Valider"}</button>
-      <span id="status-indicator" class="status">Status: incomplete</span>
     </div>
     
     <div id="alert" class="alert hidden"></div>
@@ -256,7 +258,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     const validateBtn = document.getElementById('validate-btn');
     const codeInput = document.getElementById('completion-code');
     const alertEl = document.getElementById('alert');
-    const statusIndicator = document.getElementById('status-indicator');
     
     // Initialize content
     window.addEventListener('DOMContentLoaded', () => {
@@ -267,9 +268,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
           doc.write(\`${iframeContent.replace(/`/g, '\\`')}\`);
           doc.close();`
       }
-      
-      // Update status indicator
-      updateStatusIndicator('incomplete');
     });
     
     // Handle validation
@@ -278,7 +276,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       
       if (validateCompletionCode(enteredCode, correctCode)) {
         isCompleted = true;
-        updateStatusIndicator('completed');
         showAlert("${endMessage || 'Félicitations ! Vous avez terminé ce module.'}", true);
         contentFrame.classList.add('hidden');
         completionSection.classList.remove('hidden');
@@ -299,10 +296,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
           alertEl.classList.add('hidden');
         }, 3000);
       }
-    }
-    
-    function updateStatusIndicator(status) {
-      statusIndicator.textContent = 'Status: ' + status;
     }
   </script>
 </body>
