@@ -231,16 +231,16 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
   <div class="container">
     <div class="header">
       ${formData.logo ? `<img src="${formData.logo}" alt="Logo">` : ''}
-      <span>${formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
+      <span>${formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
       <input type="text" id="completion-code">
-      <button id="validate-btn">${formData.buttonText || "Valider"}</button>
+      <button id="validate-btn">${formData.buttonText || "Validate"}</button>
     </div>
     
     <div id="alert" class="alert hidden"></div>
     
     <div id="completion-section" class="completion-message hidden">
-      <h2>Module terminé</h2>
-      <p id="end-message">${endMessage || 'Félicitations ! Vous avez terminé ce module.'}</p>
+      <h2>Module completed</h2>
+      <p id="end-message">${endMessage || 'Congratulations! You have completed this module.'}</p>
     </div>
     
     <iframe id="content-frame" class="content"></iframe>
@@ -276,13 +276,13 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       
       if (validateCompletionCode(enteredCode, correctCode)) {
         isCompleted = true;
-        showAlert("${endMessage || 'Félicitations ! Vous avez terminé ce module.'}", true);
+        showAlert("${endMessage || 'Congratulations! You have completed this module.'}", true);
         contentFrame.classList.add('hidden');
         completionSection.classList.remove('hidden');
         validateBtn.disabled = true;
         codeInput.disabled = true;
       } else {
-        showAlert("Code incorrect. Veuillez réessayer.", false);
+        showAlert("Incorrect code. Please try again.", false);
       }
     });
     

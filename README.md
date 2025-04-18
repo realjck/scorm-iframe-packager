@@ -1,23 +1,20 @@
 # Web2SCORM
+## Easily generate a SCORM package with your web content
 
-## Générez facilement un package SCORM avec votre contenu web
+This JavaScript app allows you to create and download a SCORM package containing an iframe with content from a URL or web sharing link.
 
-Cette app JavaScript permet de réaliser et télécharger un package SCORM contenant une iframe avec un contenu provenant d'une url ou d'un lien de partage web.
+## Features
 
-![logo](medias/web2scorm_logo/web2scorm_logo_1000px.png)
-
-## Fonctionnalités
-
-- [X] Création de packages SCORM 1.2 et 2004 compatibles avec la plupart des LMS
-- [X] Intégration de contenu web via URL ou code HTML
-- [X] Système de validation par code pour marquer le module comme complété
-- [X] Prévisualisation du contenu
-- [X] Téléchargement direct du package SCORM
-- [X] Personnalisation de la description du manifest SCORM
-- [ ] Intégration automatique de contenu YouTube (possibilité de tracker la fin ?)
-- [X] Personnalisation de l'interface iframe avec choix des couleurs du bandeau
-- [ ] Personnalisation de l'interface iframe avec choix d'un logo
-- [ ] Possibilité de compléter le contenu à l'ouverture de l'url
-- [ ] Création de quiz QCM/QCU pour la complétion, avec remontée du score
-- [ ] Création de différents projets de packages, avec sauvegarde en IndexedDB
-- [ ] Packaging Electron
+- [X] Creation of SCORM 1.2 and 2004 packages compatible with most LMS
+- [X] Web content integration via URL or HTML code
+- [X] Code validation system to mark the module as completed
+- [X] Content preview
+- [X] Direct SCORM package download
+- [X] SCORM manifest description customization
+- [ ] Automatic YouTube content integration (possibility to track completion?)
+- [X] Iframe interface customization with header color choices
+- [ ] Iframe interface customization with logo choice
+- [ ] Ability to complete content when opening the URL
+- [ ] QCM/QCU quiz creation for completion, with score reporting
+- [ ] Creation of different package projects, with IndexedDB storage
+- [ ] Electron packaging

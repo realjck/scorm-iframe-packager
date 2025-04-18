@@ -38,10 +38,10 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
       setIsCompleted(true);
       setStatus('completed');
       setShowAlert(true);
-      setAlertMessage(formData.endMessage || "Félicitations ! Vous avez terminé ce module.");
+      setAlertMessage(formData.endMessage || "Congratulations! You have completed this module.");
     } else {
       setShowAlert(true);
-      setAlertMessage("Code incorrect. Veuillez réessayer.");
+      setAlertMessage("Incorrect code. Please try again.");
       setTimeout(() => setShowAlert(false), 3000);
     }
   };
@@ -103,7 +103,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
             className="h-8 mr-4 object-contain"
           />
         )}
-        <span className="mr-3">{formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
+        <span className="mr-3">{formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
         <Input 
           value={enteredCode}
           onChange={(e) => setEnteredCode(e.target.value)}
@@ -118,7 +118,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
           }}
           disabled={isCompleted}
         >
-          {formData.buttonText || "Valider"}
+          {formData.buttonText || "Validate"}
         </Button>
       </div>
       
@@ -131,7 +131,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
       {isCompleted ? (
         <div className="flex-1 p-6 flex items-center justify-center">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Module terminé</h2>
+            <h2 className="text-2xl font-bold mb-4">Module completed</h2>
             <p className="text-gray-600">{formData.endMessage}</p>
           </div>
         </div>

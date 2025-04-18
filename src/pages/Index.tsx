@@ -18,7 +18,7 @@ const defaultFormData: ScormFormData = {
   iframeContent: "",
   completionCode: "",
   endMessage: "",
-  codePromptMessage: "Veuillez entrer le code donné en fin d'activité :" // Default value
+  codePromptMessage: "Please enter the code given at the end of the activity:" // Default value
 };
 
 const Index = () => {
@@ -54,8 +54,8 @@ const Index = () => {
   const handleReset = () => {
     setFormData(defaultFormData);
     toast({
-      title: "Formulaire réinitialisé",
-      description: "Tous les champs ont été réinitialisés à leur valeur par défaut.",
+      title: "Form reset",
+      description: "All fields have been reset to their default values.",
     });
   };
 
@@ -63,8 +63,8 @@ const Index = () => {
     if (previewRef.current && previewRef.current.reset) {
       previewRef.current.reset();
       toast({
-        title: "Aperçu réinitialisé",
-        description: "L'aperçu a été réinitialisé avec succès.",
+        title: "Preview reset",
+        description: "The preview has been reset successfully.",
       });
     }
   };
@@ -73,8 +73,8 @@ const Index = () => {
     try {
       if (!formData.title) {
         toast({
-          title: "Titre manquant",
-          description: "Veuillez entrer un titre pour votre package SCORM.",
+          title: "Missing title",
+          description: "Please enter a title for your SCORM package.",
           variant: "destructive"
         });
         return;
@@ -82,8 +82,8 @@ const Index = () => {
 
       if (!formData.completionCode) {
         toast({
-          title: "Code de complétion manquant",
-          description: "Veuillez entrer un code de complétion.",
+          title: "Missing completion code",
+          description: "Please enter a completion code.",
           variant: "destructive"
         });
         return;
@@ -92,15 +92,15 @@ const Index = () => {
       await generateScormPackage(formData);
 
       toast({
-        title: "Package généré avec succès",
-        description: "Le téléchargement devrait commencer automatiquement.",
+        title: "Package generated successfully",
+        description: "The download should start automatically.",
       });
     } catch (error) {
       console.error("Error downloading package:", error);
       
       toast({
-        title: "Erreur de génération",
-        description: "Une erreur est survenue lors de la génération du package.",
+        title: "Generation error",
+        description: "An error occurred while generating the package.",
         variant: "destructive"
       });
     }

@@ -31,15 +31,15 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         <img src="./assets/images/icon.png" alt="SCORM Packager Icon" className="w-12 h-12" />
         <h1 className="text-3xl font-bold text-gray-600">Web2SCORM</h1>
       </div>
-      <h2 className="text-1xl mb-6 text-gray-600">Générez facilement un package SCORM avec votre contenu HTML. La partie droite de l'écran affiche le contenu de votre package.</h2>
+      <h2 className="text-1xl mb-6 text-gray-600">Easily generate a SCORM package with your HTML content. The right side of the screen displays your package content.</h2>
       
       <div className="space-y-8">
         {/* Section Manifest SCORM */}
         <div className="rounded-lg border border-gray-400 p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-700">Manifest SCORM</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-700">SCORM Manifest</h3>
           <div className="space-y-6">
             <div>
-              <p className="mb-2">Version :</p>
+              <p className="mb-2">Version:</p>
               <RadioGroup
                 name="scormVersion"
                 value={formData.scormVersion}
@@ -58,7 +58,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="title" className="mb-2 block">Titre du manifeste SCORM :</Label>
+              <Label htmlFor="title" className="mb-2 block">SCORM manifest title:</Label>
               <Input
                 id="title"
                 name="title"
@@ -68,7 +68,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="description" className="mb-2 block">Description du manifeste SCORM :</Label>
+              <Label htmlFor="description" className="mb-2 block">SCORM manifest description:</Label>
               <Textarea
                 id="description"
                 name="description"
@@ -80,7 +80,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="duration" className="mb-2 block">Durée en minutes du manifeste SCORM (ex: 30) :</Label>
+              <Label htmlFor="duration" className="mb-2 block">SCORM manifest duration in minutes (e.g., 30):</Label>
               <Input
                 id="duration"
                 name="duration"
@@ -91,18 +91,18 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
           </div>
         </div>
 
-        {/* Section Contenu du package */}
+        {/* Package Content Section */}
         <div className="rounded-lg border border-gray-400 p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-700">Contenu du package</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-700">Package Content</h3>
           <div className="space-y-6">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <Label htmlFor="iframeContent">Contenu de l'iframe :</Label>
+                <Label htmlFor="iframeContent">Iframe content:</Label>
                 <Button 
                   variant="outline" 
                   size="icon"
                   onClick={handleReloadIframe}
-                  title="Recharger"
+                  title="Reload"
                   className="h-8 w-8 border-gray-300 hover:bg-black hover:text-white"
                 >
                   <RefreshCw size={16} />
@@ -113,19 +113,19 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                 name="iframeContent"
                 value={formData.iframeContent}
                 onChange={handleChange}
-                placeholder="URL ou code HTML"
+                placeholder="URL or HTML code"
                 className="min-h-[120px]"
               />
             </div>
 
             {/* Customization section */}
             <div className="rounded-lg border border-gray-300 p-4 bg-gray-50">
-              <h4 className="text-md font-semibold mb-4 text-gray-700">Personnalisation de l'interface</h4>
+              <h4 className="text-md font-semibold mb-4 text-gray-700">Interface Customization</h4>
               
               <div className="space-y-4">
                 {/* Logo upload field */}
                 <div className="mb-4">
-                  <Label htmlFor="logo" className="mb-2 block">Logo :</Label>
+                  <Label htmlFor="logo" className="mb-2 block">Logo:</Label>
                   <div className="flex items-center gap-4">
                     <Input
                       type="file"
@@ -135,7 +135,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                         const file = e.target.files?.[0];
                         if (file) {
                           if (file.size > 1024 * 1024) {
-                            alert("Le fichier est trop volumineux. Taille maximum : 1 Mo");
+                            alert("File is too large. Maximum size: 1MB");
                             e.target.value = '';
                             return;
                           }
@@ -155,7 +155,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                         onClick={() => onChange({ logo: undefined })}
                         className="px-2"
                       >
-                        Supprimer
+                        Remove
                       </Button>
                     )}
                   </div>
@@ -168,10 +168,10 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                   )}
                 </div>
 
-                {/* Existing color pickers */}
+                {/* Color pickers */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="headerBgColor" className="mb-2 block">Couleur de fond de l'en-tête :</Label>
+                    <Label htmlFor="headerBgColor" className="mb-2 block">Header background color:</Label>
                     <div className="flex gap-2">
                       <Input
                         type="color"
@@ -192,7 +192,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                   </div>
 
                   <div>
-                    <Label htmlFor="headerTextColor" className="mb-2 block">Couleur du texte de l'en-tête :</Label>
+                    <Label htmlFor="headerTextColor" className="mb-2 block">Header text color:</Label>
                     <div className="flex gap-2">
                       <Input
                         type="color"
@@ -213,10 +213,10 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                   </div>
                 </div>
 
-                {/* Button customization fields in grid */}
+                {/* Button customization */}
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="buttonBgColor" className="mb-2 block">Couleur de fond du bouton :</Label>
+                    <Label htmlFor="buttonBgColor" className="mb-2 block">Button background color:</Label>
                     <div className="flex gap-2">
                       <Input
                         type="color"
@@ -237,7 +237,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                   </div>
 
                   <div>
-                    <Label htmlFor="buttonTextColor" className="mb-2 block">Couleur du texte du bouton :</Label>
+                    <Label htmlFor="buttonTextColor" className="mb-2 block">Button text color:</Label>
                     <div className="flex gap-2">
                       <Input
                         type="color"
@@ -258,11 +258,11 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                   </div>
 
                   <div>
-                    <Label htmlFor="buttonText" className="mb-2 block">Texte du bouton :</Label>
+                    <Label htmlFor="buttonText" className="mb-2 block">Button text:</Label>
                     <Input
                       id="buttonText"
                       name="buttonText"
-                      value={formData.buttonText || "Valider"}
+                      value={formData.buttonText || "Validate"}
                       onChange={handleChange}
                       className="h-10"
                     />
@@ -272,18 +272,18 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
             
             <div>
-              <Label htmlFor="codePromptMessage" className="mb-2 block">Message de saisie du code :</Label>
+              <Label htmlFor="codePromptMessage" className="mb-2 block">Code entry message:</Label>
               <Input
                 id="codePromptMessage"
                 name="codePromptMessage"
                 value={formData.codePromptMessage}
                 onChange={handleChange}
-                placeholder="Veuillez entrer le code donné en fin d'activité :"
+                placeholder="Please enter the code given at the end of the activity:"
               />
             </div>
 
             <div>
-              <Label htmlFor="completionCode" className="mb-2 block">Code de fin d'activité :</Label>
+              <Label htmlFor="completionCode" className="mb-2 block">Activity completion code:</Label>
               <Input
                 id="completionCode"
                 name="completionCode"
@@ -293,7 +293,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="endMessage" className="mb-2 block">Message de fin (optionnel) :</Label>
+              <Label htmlFor="endMessage" className="mb-2 block">End message (optional):</Label>
               <Textarea
                 id="endMessage"
                 name="endMessage"
@@ -305,12 +305,12 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
           </div>
         </div>
 
-        {/* Single download button outside of sections */}
+        {/* Download button */}
         <Button 
           onClick={onDownload} 
           className="w-full bg-black hover:bg-gray-800 text-white py-6 text-lg"
         >
-          <Download className="mr-2 h-5 w-5" /> Télécharger le package
+          <Download className="mr-2 h-5 w-5" /> Download package
         </Button>
       </div>
     </div>
