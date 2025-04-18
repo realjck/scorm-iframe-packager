@@ -29,7 +29,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
     <div className="p-6 bg-muted rounded-md">
       <div className="flex items-center gap-4 mb-6">
         <img src="./assets/images/icon.png" alt="SCORM Packager Icon" className="w-12 h-12" />
-        <h1 className="text-3xl font-bold text-gray-600">SCORM iframe packager</h1>
+        <h1 className="text-3xl font-bold text-gray-600">Web2SCORM</h1>
       </div>
       <h2 className="text-1xl mb-6 text-gray-600">Générez facilement un package SCORM avec votre contenu HTML. La partie droite de l'écran affiche le contenu de votre package.</h2>
       <div className="space-y-6">
@@ -53,7 +53,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         </div>
 
         <div>
-          <Label htmlFor="title" className="mb-2 block">Titre du package :</Label>
+          <Label htmlFor="title" className="mb-2 block">Titre du manifeste SCORM :</Label>
           <Input
             id="title"
             name="title"
@@ -63,7 +63,19 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         </div>
 
         <div>
-          <Label htmlFor="duration" className="mb-2 block">Durée en minutes (ex: 30) :</Label>
+          <Label htmlFor="description" className="mb-2 block">Description du manifeste SCORM :</Label>
+          <Textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="SCORM content generated with Web2SCORM"
+            className="min-h-[80px]"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="duration" className="mb-2 block">Durée en minutes du manifeste SCORM (ex: 30) :</Label>
           <Input
             id="duration"
             name="duration"

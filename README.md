@@ -13,7 +13,7 @@ Cette app JavaScript permet de réaliser et télécharger un package SCORM conte
 - [X] Système de validation par code pour marquer le module comme complété
 - [X] Prévisualisation du contenu
 - [X] Téléchargement direct du package SCORM
-- [ ] Personnalisation de la description du manifest SCORM
+- [X] Personnalisation de la description du manifest SCORM
 - [ ] Intégration automatique de contenu YouTube (possibilité de tracker la fin ?)
 - [ ] Personnalisation de l'interface iframe avec choix des couleurs du bandeau
 - [ ] Possibilité de compléter le contenu à l'ouverture de l'url
