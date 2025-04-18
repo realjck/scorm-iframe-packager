@@ -15,7 +15,8 @@ Cette app JavaScript permet de réaliser et télécharger un package SCORM conte
 - [X] Téléchargement direct du package SCORM
 - [X] Personnalisation de la description du manifest SCORM
 - [ ] Intégration automatique de contenu YouTube (possibilité de tracker la fin ?)
-- [ ] Personnalisation de l'interface iframe avec choix des couleurs du bandeau
+- [X] Personnalisation de l'interface iframe avec choix des couleurs du bandeau
+- [ ] Personnalisation de l'interface iframe avec choix d'un logo
 - [ ] Possibilité de compléter le contenu à l'ouverture de l'url
 - [ ] Création de quiz QCM/QCU pour la complétion, avec remontée du score
 - [ ] Création de différents projets de packages, avec sauvegarde en IndexedDB

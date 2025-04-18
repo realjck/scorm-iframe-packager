@@ -89,7 +89,13 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="preview-header p-4 flex items-center">
+      <div 
+        className="preview-header p-4 flex items-center" 
+        style={{
+          backgroundColor: formData.headerBgColor || '#f0f0f0',
+          color: formData.headerTextColor || '#000000'
+        }}
+      >
         <span className="mr-3">{formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
         <Input 
           value={enteredCode}
@@ -99,10 +105,13 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
         />
         <Button 
           onClick={handleValidate} 
-          className="bg-black hover:bg-gray-800"
+          style={{
+            backgroundColor: formData.buttonBgColor || '#1a57d1',
+            color: formData.buttonTextColor || '#ffffff'
+          }}
           disabled={isCompleted}
         >
-          Valider
+          {formData.buttonText || "Valider"}
         </Button>
         <span className="ml-3 text-xs italic text-gray-500">
           Status: {status}

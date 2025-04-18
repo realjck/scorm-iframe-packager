@@ -118,6 +118,114 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
               />
             </div>
 
+            {/* Customization section */}
+            <div className="rounded-lg border border-gray-300 p-4 bg-gray-50">
+              <h4 className="text-md font-semibold mb-4 text-gray-700">Personnalisation de l'interface</h4>
+              
+              {/* Header color picker fields in grid */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="headerBgColor" className="mb-2 block">Couleur de fond de l'en-tête :</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="color"
+                        id="headerBgColor"
+                        name="headerBgColor"
+                        value={formData.headerBgColor || "#f0f0f0"}
+                        onChange={handleChange}
+                        className="w-16 h-10 p-1"
+                      />
+                      <Input
+                        type="text"
+                        value={formData.headerBgColor || "#f0f0f0"}
+                        onChange={handleChange}
+                        name="headerBgColor"
+                        className="flex-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="headerTextColor" className="mb-2 block">Couleur du texte de l'en-tête :</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="color"
+                        id="headerTextColor"
+                        name="headerTextColor"
+                        value={formData.headerTextColor || "#000000"}
+                        onChange={handleChange}
+                        className="w-16 h-10 p-1"
+                      />
+                      <Input
+                        type="text"
+                        value={formData.headerTextColor || "#000000"}
+                        onChange={handleChange}
+                        name="headerTextColor"
+                        className="flex-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Button customization fields in grid */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="buttonBgColor" className="mb-2 block">Couleur de fond du bouton :</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="color"
+                        id="buttonBgColor"
+                        name="buttonBgColor"
+                        value={formData.buttonBgColor || "#1a57d1"}
+                        onChange={handleChange}
+                        className="w-16 h-10 p-1"
+                      />
+                      <Input
+                        type="text"
+                        value={formData.buttonBgColor || "#1a57d1"}
+                        onChange={handleChange}
+                        name="buttonBgColor"
+                        className="flex-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="buttonTextColor" className="mb-2 block">Couleur du texte du bouton :</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="color"
+                        id="buttonTextColor"
+                        name="buttonTextColor"
+                        value={formData.buttonTextColor || "#ffffff"}
+                        onChange={handleChange}
+                        className="w-16 h-10 p-1"
+                      />
+                      <Input
+                        type="text"
+                        value={formData.buttonTextColor || "#ffffff"}
+                        onChange={handleChange}
+                        name="buttonTextColor"
+                        className="flex-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="buttonText" className="mb-2 block">Texte du bouton :</Label>
+                    <Input
+                      id="buttonText"
+                      name="buttonText"
+                      value={formData.buttonText || "Valider"}
+                      onChange={handleChange}
+                      className="h-10"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <div>
               <Label htmlFor="codePromptMessage" className="mb-2 block">Message de saisie du code :</Label>
               <Input

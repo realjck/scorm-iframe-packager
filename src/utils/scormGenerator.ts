@@ -154,7 +154,8 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       height: 100%;
     }
     .header {
-      background-color: #f0f0f0;
+      background-color: ${formData.headerBgColor || '#f0f0f0'};
+      color: ${formData.headerTextColor || '#000000'};
       padding: 10px;
       display: flex;
       align-items: center;
@@ -171,8 +172,8 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     }
     .header button {
       padding: 8px 16px;
-      background-color: #000;
-      color: white;
+      background-color: ${formData.buttonBgColor || '#000000'};
+      color: ${formData.buttonTextColor || '#ffffff'};
       border: none;
       border-radius: 4px;
       cursor: pointer;
@@ -223,7 +224,7 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     <div class="header">
       <span>${formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
       <input type="text" id="completion-code">
-      <button id="validate-btn">Valider</button>
+      <button id="validate-btn">${formData.buttonText || "Valider"}</button>
       <span id="status-indicator" class="status">Status: incomplete</span>
     </div>
     

@@ -8,4 +8,9 @@ export interface ScormFormData {
   completionCode: string;
   endMessage: string;
   codePromptMessage: string;
+  headerBgColor?: string;
+  headerTextColor?: string;
+  buttonBgColor?: string;
+  buttonTextColor?: string;
+  buttonText?: string;
 }
