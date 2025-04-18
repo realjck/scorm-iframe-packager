@@ -114,7 +114,7 @@ const Index = () => {
           className="h-full rounded-lg border"
         >
           {/* Left panel: SCORM Configuration Form with ScrollArea */}
-          <ResizablePanel defaultSize={50} minSize={30} className="bg-gray-100">
+          <ResizablePanel defaultSize={33} minSize={25} className="bg-gray-100">
             <ScrollArea className="h-full black-scrollbar mr-2.5">
               <ScormForm 
                 formData={formData}
@@ -129,7 +129,7 @@ const Index = () => {
           <ResizableHandle withHandle className="bg-gray-200 hover:bg-gray-300 transition-colors" />
           
           {/* Right panel: Live Preview */}
-          <ResizablePanel defaultSize={50} minSize={30} className="bg-white">
+          <ResizablePanel defaultSize={67} minSize={25} className="bg-white">
             <ScormPreview formData={formData} ref={previewRef} />
           </ResizablePanel>
         </ResizablePanelGroup>

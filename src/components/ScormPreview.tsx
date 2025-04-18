@@ -132,7 +132,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
         <div className="flex-1 p-6 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Module completed</h2>
-            <p className="text-gray-600">{formData.endMessage}</p>
+            <p className="text-gray-600">{formData.endMessage || 'Congratulations! You have completed this module.'}</p>
           </div>
         </div>
       ) : (

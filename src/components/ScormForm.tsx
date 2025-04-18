@@ -214,7 +214,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                 </div>
 
                 {/* Button customization */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="buttonBgColor" className="mb-2 block">Button background color:</Label>
                     <div className="flex gap-2">
@@ -256,7 +256,9 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                       />
                     </div>
                   </div>
+                </div>
 
+                <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="buttonText" className="mb-2 block">Button text:</Label>
                     <Input
@@ -267,6 +269,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                       className="h-10"
                     />
                   </div>
+
                 </div>
               </div>
             </div>
