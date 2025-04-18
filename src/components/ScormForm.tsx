@@ -26,7 +26,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
   };
 
   return (
-    <div className="p-6 bg-muted rounded-md">
+    <div className="p-6">
       <div className="flex items-center gap-4 mb-6">
         <img src="./assets/images/icon.png" alt="SCORM Packager Icon" className="w-12 h-12" />
         <h1 className="text-3xl font-bold text-gray-600">Web2SCORM</h1>
