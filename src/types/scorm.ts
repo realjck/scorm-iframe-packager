@@ -13,4 +13,5 @@ export interface ScormFormData {
   buttonBgColor?: string;
   buttonTextColor?: string;
   buttonText?: string;
+  logo?: string; // base64 string
 }

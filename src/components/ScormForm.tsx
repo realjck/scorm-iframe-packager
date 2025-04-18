@@ -122,8 +122,53 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             <div className="rounded-lg border border-gray-300 p-4 bg-gray-50">
               <h4 className="text-md font-semibold mb-4 text-gray-700">Personnalisation de l'interface</h4>
               
-              {/* Header color picker fields in grid */}
               <div className="space-y-4">
+                {/* Logo upload field */}
+                <div className="mb-4">
+                  <Label htmlFor="logo" className="mb-2 block">Logo :</Label>
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="file"
+                      id="logo"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          if (file.size > 1024 * 1024) {
+                            alert("Le fichier est trop volumineux. Taille maximum : 1 Mo");
+                            e.target.value = '';
+                            return;
+                          }
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            onChange({ logo: event.target?.result as string });
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                      className="flex-1"
+                    />
+                    {formData.logo && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onChange({ logo: undefined })}
+                        className="px-2"
+                      >
+                        Supprimer
+                      </Button>
+                    )}
+                  </div>
+                  {formData.logo && (
+                    <img 
+                      src={formData.logo} 
+                      alt="Logo preview" 
+                      className="mt-2 h-8 object-contain"
+                    />
+                  )}
+                </div>
+
+                {/* Existing color pickers */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="headerBgColor" className="mb-2 block">Couleur de fond de l'en-tête :</Label>

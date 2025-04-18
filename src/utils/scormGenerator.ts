@@ -161,6 +161,11 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       align-items: center;
       border-bottom: 1px solid #ddd;
     }
+    .header img {
+      height: 32px;
+      margin-right: 16px;
+      object-fit: contain;
+    }
     .header span {
       margin-right: 10px;
     }
@@ -222,6 +227,7 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
 <body>
   <div class="container">
     <div class="header">
+      ${formData.logo ? `<img src="${formData.logo}" alt="Logo">` : ''}
       <span>${formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
       <input type="text" id="completion-code">
       <button id="validate-btn">${formData.buttonText || "Valider"}</button>

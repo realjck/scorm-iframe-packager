@@ -96,6 +96,13 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
           color: formData.headerTextColor || '#000000'
         }}
       >
+        {formData.logo && (
+          <img 
+            src={formData.logo} 
+            alt="Logo" 
+            className="h-8 mr-4 object-contain"
+          />
+        )}
         <span className="mr-3">{formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
         <Input 
           value={enteredCode}
