@@ -111,7 +111,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
         <Input 
           value={enteredCode}
           onChange={(e) => setEnteredCode(e.target.value)}
-          className="w-52 mr-2"
+          className="w-52 mr-2 text-black"
           disabled={isCompleted}
         />
         <Button 
