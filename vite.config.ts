@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  base: '/scorm-iframe-packager/', // Ajoutez le nom de votre dépôt ici
+  base: '/web2scorm/', // Ajoutez le nom de votre dépôt ici
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

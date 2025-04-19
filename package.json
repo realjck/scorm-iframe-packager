@@ -1,9 +1,9 @@
 {
-  "name": "scorm-iframe-packager",
+  "name": "web2scorm",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://realjck.github.io/scorm-iframe-packager",
+  "homepage": "https://realjck.github.io/web2scorm",
   "scripts": {
     "dev": "vite",
     "copy-xsd": "copyfiles -u 1 \"src/xsd/**/*\" dist/xsd",
