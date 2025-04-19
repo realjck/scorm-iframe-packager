@@ -26,11 +26,14 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
 
   return (
     <div className="p-6">
-      <div className="flex items-center gap-4 mb-6">
-        <img src="./assets/images/icon.png" alt="SCORM Packager Icon" className="w-12 h-12" />
-        <h1 className="text-3xl font-bold text-gray-600">Web2SCORM</h1>
+      <div className="flex mb-6">
+        <img 
+          src="./assets/images/web2scorm_logo_1000px.png" 
+          alt="Web2SCORM Logo" 
+          className="h-24 object-contain" 
+        />
       </div>
-      <h2 className="text-1xl mb-6 text-gray-600">Easily generate a SCORM package with your HTML content. The right side of the screen displays your package content.</h2>
+      <h2 className="text-1xl mb-6 text-gray-600">Create SCORM-compliant e-learning packages by embedding web content through URLs or HTML code, with completion tracking capabilities.</h2>
       
       <div className="space-y-8">
         {/* Section Manifest SCORM */}
