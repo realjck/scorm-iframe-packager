@@ -5,6 +5,7 @@ import { ScormFormData } from '@/types/scorm';
 export const generateScorm12Manifest = (formData: ScormFormData): string => {
   const uniqueId = "SCORM_" + Date.now();
   const title = formData.title || "SCORM Module";
+  const description = formData.description || "SCORM content generated with Web2SCORM";
 
   return `<?xml version="1.0" standalone="no" ?>
 <manifest identifier="${uniqueId}" version="1.0"
@@ -24,7 +25,7 @@ export const generateScorm12Manifest = (formData: ScormFormData): string => {
           <langstring>${escapeXml(title)}</langstring>
         </title>
         <description>
-          <langstring>SCORM content generated with SCORM Packager</langstring>
+          <langstring>${escapeXml(description)}</langstring>
         </description>
       </general>
       <educational>
@@ -57,7 +58,8 @@ export const generateScorm12Manifest = (formData: ScormFormData): string => {
 export const generateScorm2004Manifest = (formData: ScormFormData): string => {
   const uniqueId = "SCORM_" + Date.now();
   const title = formData.title || "SCORM Module";
-  
+  const description = formData.description || "SCORM content generated with Web2SCORM";
+
   return `<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <manifest identifier="${uniqueId}" version="1"
   xmlns="http://www.imsglobal.org/xsd/imscp_v1p1"
@@ -81,7 +83,7 @@ export const generateScorm2004Manifest = (formData: ScormFormData): string => {
           <string language="en-US">${escapeXml(title)}</string>
         </title>
         <description>
-          <string language="en-US">SCORM content generated with SCORM Packager</string>
+          <string language="en-US">${escapeXml(description)}</string>
         </description>
       </general>
       <educational>

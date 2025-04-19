@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScormFormData } from '@/types/scorm';
+import ReactMarkdown from 'react-markdown';
 
 interface ScormPreviewProps {
   formData: ScormFormData;
@@ -25,7 +26,10 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
     setShowAlert(false);
     setAlertMessage('');
     setStatus('incomplete');
-    renderIframeContent();
+    // Attendre que isCompleted soit mis à jour avant de réafficher l'iframe
+    setTimeout(() => {
+      renderIframeContent();
+    }, 0);
   };
 
   // Expose the reset function to the parent via ref
@@ -38,10 +42,10 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
       setIsCompleted(true);
       setStatus('completed');
       setShowAlert(true);
-      setAlertMessage(formData.endMessage || "Félicitations! Vous avez terminé ce module.");
+      setAlertMessage(formData.alertMessageRight || "Congratulations!");
     } else {
       setShowAlert(true);
-      setAlertMessage("Code incorrect. Veuillez réessayer.");
+      setAlertMessage(formData.alertMessageWrong || "Incorrect code. Please try again.");
       setTimeout(() => setShowAlert(false), 3000);
     }
   };
@@ -89,24 +93,37 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="preview-header p-4 flex items-center">
-        <span className="mr-3">{formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
+      <div 
+        className="preview-header p-4 flex items-center" 
+        style={{
+          backgroundColor: formData.headerBgColor || '#f0f0f0',
+          color: formData.headerTextColor || '#000000'
+        }}
+      >
+        {formData.logo && (
+          <img 
+            src={formData.logo} 
+            alt="Logo" 
+            className="h-8 mr-4 object-contain"
+          />
+        )}
+        <span className="mr-3">{formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
         <Input 
           value={enteredCode}
           onChange={(e) => setEnteredCode(e.target.value)}
-          className="w-52 mr-2"
+          className="w-52 mr-2 text-black"
           disabled={isCompleted}
         />
         <Button 
           onClick={handleValidate} 
-          className="bg-black hover:bg-gray-800"
+          style={{
+            backgroundColor: formData.buttonBgColor || '#1a57d1',
+            color: formData.buttonTextColor || '#ffffff'
+          }}
           disabled={isCompleted}
         >
-          Valider
+          {formData.buttonText || "Validate"}
         </Button>
-        <span className="ml-3 text-xs italic text-gray-500">
-          Status: {status}
-        </span>
       </div>
       
       {showAlert && (
@@ -116,10 +133,11 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
       )}
       
       {isCompleted ? (
-        <div className="flex-1 p-6 flex items-center justify-center border-4 border-dotted border-green-300">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Module terminé</h2>
-            <p className="text-gray-600">{formData.endMessage}</p>
+        <div className="flex-1 p-6 flex items-center justify-center">
+          <div className="text-center prose dark:prose-invert">
+            <ReactMarkdown>
+              {formData.endMessage || '# Module completed\n\nCongratulations! You have completed this module.'}
+            </ReactMarkdown>
           </div>
         </div>
       ) : (

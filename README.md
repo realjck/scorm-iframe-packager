@@ -1,24 +1,22 @@
-# SCORM iframe packager
+# Web2SCORM
+## Easily generate a SCORM package with your web content
 
-## Générez facilement un package SCORM avec votre contenu web
+A web application that allows users to create SCORM-compliant e-learning packages by embedding web content through URLs or HTML code, with completion tracking capabilities.
 
-Cette app JavaScript permet de réaliser et télécharger un package SCORM contenant une iframe avec un contenu provenant d'une url ou d'un lien de partage web. L'apprenant doit rentrer un code pour passer le module au statut complété.
+## ▶ [Launch the app](https://realjck.github.io/scorm-iframe-packager/)
 
-## ▶ [Lien vers l'outil](https://realjck.github.io/scorm-iframe-packager/)
+## Features
 
-![screenshot](medias/screenshot.jpg)
+- [X] Creation of SCORM 1.2 and 2004 packages compatible with most LMS
+- [X] Web content integration via URL or HTML code
+- [X] Code validation system to mark the module as completed
+- [X] Content preview
+- [X] Direct SCORM package download
+- [X] SCORM manifest description customization
+- [X] Iframe interface customization with header color choices and logotype
 
-## Fonctionnalités
+### Roadmap for future releases
 
-- Création de packages SCORM 1.2 et 2004 compatibles avec la plupart des LMS
-- Intégration de contenu web via URL ou code HTML
-- Système de validation par code pour marquer le module comme complété
-- Prévisualisation du contenu
-- Téléchargement direct du package SCORM
-
-## Technologies utilisées
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- shadcn/ui
+- [ ] YouTube content integration with completion tracking
+- [ ] QCM/QCU quiz creation for completion, with score reporting
+- [ ] Management of several packaging projects, with IndexedDB storage

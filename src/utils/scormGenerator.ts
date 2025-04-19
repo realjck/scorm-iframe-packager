@@ -3,6 +3,7 @@ import { ScormFormData } from '@/types/scorm';
 import { scorm12ApiTemplate, scorm2004ApiTemplate } from './scormAPI';
 import { generateScorm12Manifest, generateScorm2004Manifest } from './manifestGenerator';
 import JSZip from 'jszip';
+import { marked } from 'marked';
 
 // Helper function to determine if content is a URL
 const isUrl = (str: string) => {
@@ -131,6 +132,9 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
   const { title, iframeContent, completionCode, endMessage, scormVersion } = formData;
   const scormApi = scormVersion === '1.2' ? scorm12ApiTemplate : scorm2004ApiTemplate;
 
+  // Convert markdown to HTML and escape newlines for JavaScript
+  const endMessageHtml = marked(endMessage || '# Module completed\n\nCongratulations! You have completed this module.');
+
   // Determine if content is a URL or HTML
   const contentIsUrl = isUrl(iframeContent);
   
@@ -154,11 +158,17 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       height: 100%;
     }
     .header {
-      background-color: #f0f0f0;
+      background-color: ${formData.headerBgColor || '#f0f0f0'};
+      color: ${formData.headerTextColor || '#000000'};
       padding: 10px;
       display: flex;
       align-items: center;
       border-bottom: 1px solid #ddd;
+    }
+    .header img {
+      height: 32px;
+      margin-right: 16px;
+      object-fit: contain;
     }
     .header span {
       margin-right: 10px;
@@ -171,8 +181,8 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     }
     .header button {
       padding: 8px 16px;
-      background-color: #000;
-      color: white;
+      background-color: ${formData.buttonBgColor || '#000000'};
+      color: ${formData.buttonTextColor || '#ffffff'};
       border: none;
       border-radius: 4px;
       cursor: pointer;
@@ -197,15 +207,18 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       margin: 10px 0;
       border-radius: 4px;
     }
+    .success, .error {
+      color: #000000;
+      margin: 0;
+      padding: 0.9em 0.7em;
+    }
     .success {
-      background-color: #d4edda;
-      border: 1px solid #c3e6cb;
-      color: #155724;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
     }
     .error {
-      background-color: #f8d7da;
-      border: 1px solid #f5c6cb;
-      color: #721c24;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
     }
     .hidden {
       display: none;
@@ -221,17 +234,16 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
 <body>
   <div class="container">
     <div class="header">
-      <span>${formData.codePromptMessage || "Veuillez entrer le code donné en fin d'activité :"}</span>
+      ${formData.logo ? `<img src="${formData.logo}" alt="Logo">` : ''}
+      <span>${formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
       <input type="text" id="completion-code">
-      <button id="validate-btn">Valider</button>
-      <span id="status-indicator" class="status">Status: incomplete</span>
+      <button id="validate-btn">${formData.buttonText || "Validate"}</button>
     </div>
     
     <div id="alert" class="alert hidden"></div>
     
-    <div id="completion-section" class="completion-message hidden">
-      <h2>Module terminé</h2>
-      <p id="end-message">${endMessage || 'Félicitations ! Vous avez terminé ce module.'}</p>
+    <div id="completion-section" class="completion-message hidden prose dark:prose-invert">
+      ${endMessageHtml}
     </div>
     
     <iframe id="content-frame" class="content"></iframe>
@@ -249,7 +261,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     const validateBtn = document.getElementById('validate-btn');
     const codeInput = document.getElementById('completion-code');
     const alertEl = document.getElementById('alert');
-    const statusIndicator = document.getElementById('status-indicator');
     
     // Initialize content
     window.addEventListener('DOMContentLoaded', () => {
@@ -260,9 +271,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
           doc.write(\`${iframeContent.replace(/`/g, '\\`')}\`);
           doc.close();`
       }
-      
-      // Update status indicator
-      updateStatusIndicator('incomplete');
     });
     
     // Handle validation
@@ -271,14 +279,13 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       
       if (validateCompletionCode(enteredCode, correctCode)) {
         isCompleted = true;
-        updateStatusIndicator('completed');
-        showAlert("${endMessage || 'Félicitations ! Vous avez terminé ce module.'}", true);
+        showAlert("${formData.alertMessageRight || "Congratulations!"}", true);
         contentFrame.classList.add('hidden');
         completionSection.classList.remove('hidden');
         validateBtn.disabled = true;
         codeInput.disabled = true;
       } else {
-        showAlert("Code incorrect. Veuillez réessayer.", false);
+        showAlert("${formData.alertMessageWrong || "Incorrect code. Please try again."}", false);
       }
     });
     
@@ -292,10 +299,6 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
           alertEl.classList.add('hidden');
         }, 3000);
       }
-    }
-    
-    function updateStatusIndicator(status) {
-      statusIndicator.textContent = 'Status: ' + status;
     }
   </script>
 </body>
