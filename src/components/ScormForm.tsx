@@ -38,7 +38,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
       <div className="space-y-8">
         {/* Section Manifest SCORM */}
         <div className="rounded-lg border border-gray-400 p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-700">SCORM Manifest</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-700">📄 SCORM Manifest</h3>
           <div className="space-y-6">
             <div>
               <p className="mb-2">Version:</p>
@@ -95,11 +95,11 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
 
         {/* Package Content Section */}
         <div className="rounded-lg border border-gray-400 p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-700">Package Content</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-700">📦 Package Content</h3>
           <div className="space-y-6">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <Label htmlFor="iframeContent">Iframe content:</Label>
+                <Label className='text-md' htmlFor="iframeContent">🌐 Iframe content:</Label>
                 <Button 
                   variant="outline" 
                   size="icon"
@@ -122,7 +122,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
 
             {/* Customization section */}
             <div className="rounded-lg border border-gray-300 p-4 bg-gray-50">
-              <h4 className="text-md font-semibold mb-4 text-gray-700">Interface Customization</h4>
+              <h4 className="text-md font-semibold mb-4 text-gray-700">🎨 Interface Customization</h4>
               
               <div className="space-y-4">
                 {/* Logo upload field */}
@@ -277,7 +277,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
             
             <div>
-              <Label htmlFor="codePromptMessage" className="mb-2 block">Code entry message:</Label>
+              <Label htmlFor="codePromptMessage" className="mb-2 text-md block">❓ Code entry message:</Label>
               <Input
                 id="codePromptMessage"
                 name="codePromptMessage"
@@ -288,7 +288,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="completionCode" className="mb-2 block">Activity completion code:</Label>
+              <Label htmlFor="completionCode" className="mb-2 text-md block">🔓 Activity completion code:</Label>
               <Input
                 id="completionCode"
                 name="completionCode"
@@ -298,7 +298,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div className="rounded-lg border border-gray-300 p-4 bg-gray-50">
-              <h4 className="text-md font-semibold mb-4 text-gray-700">Feedback Messages Customization</h4>
+              <h4 className="text-md font-semibold mb-4 text-gray-700">💬 Feedback Messages Customization</h4>
 
               <div>
                 <Label htmlFor="alertMessageRight" className="mb-2 block">Alert message right:</Label>
