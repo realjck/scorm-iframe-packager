@@ -26,7 +26,10 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
     setShowAlert(false);
     setAlertMessage('');
     setStatus('incomplete');
-    renderIframeContent();
+    // Attendre que isCompleted soit mis à jour avant de réafficher l'iframe
+    setTimeout(() => {
+      renderIframeContent();
+    }, 0);
   };
 
   // Expose the reset function to the parent via ref
