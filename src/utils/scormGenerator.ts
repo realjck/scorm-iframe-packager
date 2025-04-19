@@ -127,10 +127,22 @@ const getScorm2004XsdFiles = async () => {
 };
 
 // Generate SCORM package index.html content
-// In the generateIndexHtml function, update the header section:
-export const generateIndexHtml = (formData: ScormFormData): string => {
+// Add this helper function at the top level
+async function sha256(message: string): Promise<string> {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
+// In the generateIndexHtml function, update the script section:
+export const generateIndexHtml = async (formData: ScormFormData): Promise<string> => {
   const { title, iframeContent, completionCode, endMessage, scormVersion } = formData;
   const scormApi = scormVersion === '1.2' ? scorm12ApiTemplate : scorm2004ApiTemplate;
+
+  // Hash the completion code
+  const hashedCode = await sha256(completionCode);
 
   // Convert markdown to HTML and escape newlines for JavaScript
   const endMessageHtml = marked(endMessage || '# Module completed\n\nCongratulations! You have completed this module.');
@@ -254,13 +266,21 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     ${scormApi}
     
     // Module variables
-    const correctCode = "${completionCode}";
+    const correctCodeHash = "${hashedCode}";
     let isCompleted = false;
     const contentFrame = document.getElementById('content-frame');
     const completionSection = document.getElementById('completion-section');
     const validateBtn = document.getElementById('validate-btn');
     const codeInput = document.getElementById('completion-code');
     const alertEl = document.getElementById('alert');
+    
+    // Add SHA-256 hashing function
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
     
     // Initialize content
     window.addEventListener('DOMContentLoaded', () => {
@@ -274,10 +294,11 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     });
     
     // Handle validation
-    validateBtn.addEventListener('click', () => {
+    validateBtn.addEventListener('click', async () => {
       const enteredCode = codeInput.value.trim();
+      const enteredCodeHash = await sha256(enteredCode);
       
-      if (validateCompletionCode(enteredCode, correctCode)) {
+      if (enteredCodeHash === correctCodeHash) {
         isCompleted = true;
         showAlert("${formData.alertMessageRight || "Congratulations!"}", true);
         contentFrame.classList.add('hidden');
@@ -306,13 +327,13 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
 `;
 };
 
-// Generate and download SCORM package
+// Update the generateScormPackage function to handle the async generateIndexHtml
 export const generateScormPackage = async (formData: ScormFormData): Promise<void> => {
   try {
     const zip = new JSZip();
     
-    // Add index.html
-    const indexHtml = generateIndexHtml(formData);
+    // Add index.html (now with await)
+    const indexHtml = await generateIndexHtml(formData);
     zip.file("index.html", indexHtml);
     
     // Add manifest based on SCORM version
