@@ -3,7 +3,7 @@
 
 A web application that allows users to create SCORM-compliant e-learning packages by embedding web content through URLs or HTML code, with completion tracking capabilities.
 
-## ▶ [Launch the app](https://realjck.github.io/scorm-iframe-packager/)
+## ▶ [Launch the app](https://realjck.github.io/web2scorm/)
 
 ## Features
 
