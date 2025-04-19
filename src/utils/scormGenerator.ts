@@ -3,6 +3,7 @@ import { ScormFormData } from '@/types/scorm';
 import { scorm12ApiTemplate, scorm2004ApiTemplate } from './scormAPI';
 import { generateScorm12Manifest, generateScorm2004Manifest } from './manifestGenerator';
 import JSZip from 'jszip';
+import { marked } from 'marked';
 
 // Helper function to determine if content is a URL
 const isUrl = (str: string) => {
@@ -131,6 +132,9 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
   const { title, iframeContent, completionCode, endMessage, scormVersion } = formData;
   const scormApi = scormVersion === '1.2' ? scorm12ApiTemplate : scorm2004ApiTemplate;
 
+  // Convert markdown to HTML and escape newlines for JavaScript
+  const endMessageHtml = marked(endMessage || '# Module completed\n\nCongratulations! You have completed this module.');
+
   // Determine if content is a URL or HTML
   const contentIsUrl = isUrl(iframeContent);
   
@@ -238,9 +242,8 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
     
     <div id="alert" class="alert hidden"></div>
     
-    <div id="completion-section" class="completion-message hidden">
-      <h2>Module completed</h2>
-      <p id="end-message">${endMessage || 'Congratulations! You have completed this module.'}</p>
+    <div id="completion-section" class="completion-message hidden prose dark:prose-invert">
+      ${endMessageHtml}
     </div>
     
     <iframe id="content-frame" class="content"></iframe>
@@ -276,13 +279,13 @@ export const generateIndexHtml = (formData: ScormFormData): string => {
       
       if (validateCompletionCode(enteredCode, correctCode)) {
         isCompleted = true;
-        showAlert("${endMessage || 'Congratulations! You have completed this module.'}", true);
+        showAlert("${formData.alertMessageRight || "Congratulations!"}", true);
         contentFrame.classList.add('hidden');
         completionSection.classList.remove('hidden');
         validateBtn.disabled = true;
         codeInput.disabled = true;
       } else {
-        showAlert("Incorrect code. Please try again.", false);
+        showAlert("${formData.alertMessageWrong || "Incorrect code. Please try again."}", false);
       }
     });
     

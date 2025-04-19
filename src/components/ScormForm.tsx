@@ -296,13 +296,44 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="endMessage" className="mb-2 block">End message (optional):</Label>
+              <Label htmlFor="alertMessageRight" className="mb-2 block">Alert message right:</Label>
+              <Input
+                id="alertMessageRight"
+                name="alertMessageRight"
+                value={formData.alertMessageRight}
+                onChange={handleChange}
+                placeholder="Congratulations!"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="alertMessageWrong" className="mb-2 block">Alert message wrong:</Label>
+              <Input
+                id="alertMessageWrong"
+                name="alertMessageWrong"
+                value={formData.alertMessageWrong}
+                onChange={handleChange}
+                placeholder="Incorrect code. Please try again."
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="endMessage" className="mb-2 block">End message (Markdown supported):</Label>
               <Textarea
                 id="endMessage"
                 name="endMessage"
                 value={formData.endMessage}
                 onChange={handleChange}
-                className="min-h-[120px]"
+                className="min-h-[200px] font-mono"
+                placeholder="# Module completed
+
+Congratulations! You have completed this module.
+
+You can use Markdown syntax:
+- **Bold text**
+- *Italic text*
+- Lists
+- Etc."
               />
             </div>
           </div>

@@ -6,6 +6,8 @@ export interface ScormFormData {
   duration: string;
   iframeContent: string;
   completionCode: string;
+  alertMessageRight: string;
+  alertMessageWrong: string;
   endMessage: string;
   codePromptMessage: string;
   headerBgColor?: string;

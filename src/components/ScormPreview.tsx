@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScormFormData } from '@/types/scorm';
+import ReactMarkdown from 'react-markdown';
 
 interface ScormPreviewProps {
   formData: ScormFormData;
@@ -38,10 +39,10 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
       setIsCompleted(true);
       setStatus('completed');
       setShowAlert(true);
-      setAlertMessage(formData.endMessage || "Congratulations! You have completed this module.");
+      setAlertMessage(formData.alertMessageRight || "Congratulations!");
     } else {
       setShowAlert(true);
-      setAlertMessage("Incorrect code. Please try again.");
+      setAlertMessage(formData.alertMessageWrong || "Incorrect code. Please try again.");
       setTimeout(() => setShowAlert(false), 3000);
     }
   };
@@ -130,9 +131,10 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
       
       {isCompleted ? (
         <div className="flex-1 p-6 flex items-center justify-center">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Module completed</h2>
-            <p className="text-gray-600">{formData.endMessage || 'Congratulations! You have completed this module.'}</p>
+          <div className="text-center prose dark:prose-invert">
+            <ReactMarkdown>
+              {formData.endMessage || '# Module completed\n\nCongratulations! You have completed this module.'}
+            </ReactMarkdown>
           </div>
         </div>
       ) : (
