@@ -14,11 +14,14 @@ const STORAGE_KEY = 'scorm_form_data';
 const defaultFormData: ScormFormData = {
   scormVersion: "1.2",
   title: "",
+  description: "",
   duration: "",
   iframeContent: "",
   completionCode: "",
   endMessage: "",
-  codePromptMessage: "Please enter the code given at the end of the activity:" // Default value
+  codePromptMessage: "",
+  alertMessageRight: "",
+  alertMessageWrong: ""
 };
 
 const Index = () => {
@@ -60,7 +63,7 @@ const Index = () => {
   };
 
   const handleResetPreview = () => {
-    if (previewRef.current && previewRef.current.reset) {
+    if (previewRef.current?.reset) {
       previewRef.current.reset();
       toast({
         title: "Preview reset",
