@@ -1,5 +1,5 @@
 
-export interface ScormFormData {
+interface ScormFormData {
   scormVersion: "1.2" | "2004";
   title: string;
   description: string;
@@ -16,4 +16,6 @@ export interface ScormFormData {
   buttonTextColor?: string;
   buttonText?: string;
   logo?: string; // base64 string
+  packageType: "iframe-with-code" | "iframe-only" | "youtube";
+  youtubeVideoId?: string;
 }
