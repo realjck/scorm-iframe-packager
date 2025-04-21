@@ -1,4 +1,3 @@
-
 // SCORM API implementations for both 1.2 and 2004 standards
 
 // SCORM 1.2 API template

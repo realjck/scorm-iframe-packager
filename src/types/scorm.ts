@@ -1,5 +1,4 @@
-
-interface ScormFormData {
+export interface ScormFormData {
   scormVersion: "1.2" | "2004";
   title: string;
   description: string;

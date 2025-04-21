@@ -5,26 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Download, RefreshCw } from 'lucide-react';
-export interface ScormFormData {
-  scormVersion: "1.2" | "2004";
-  title: string;
-  description: string;
-  duration: string;
-  packageType: "iframe-with-code" | "iframe-only" | "youtube";
-  iframeContent?: string;
-  youtubeVideoId?: string;
-  logo?: string;
-  headerBgColor?: string;
-  headerTextColor?: string;
-  buttonBgColor?: string;
-  buttonTextColor?: string;
-  buttonText?: string;
-  codePromptMessage: string;
-  completionCode: string;
-  alertMessageRight: string;
-  alertMessageWrong: string;
-  endMessage: string;
-}
+import { ScormFormData } from '@/types/scorm';
 
 interface ScormFormProps {
   formData: ScormFormData;

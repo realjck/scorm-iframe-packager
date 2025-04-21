@@ -1,4 +1,3 @@
-
 import { ScormFormData } from '@/types/scorm';
 import { scorm12ApiTemplate, scorm2004ApiTemplate } from './scormAPI';
 import { generateScorm12Manifest, generateScorm2004Manifest } from './manifestGenerator';

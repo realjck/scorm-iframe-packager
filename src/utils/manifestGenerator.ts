@@ -1,4 +1,3 @@
-
 import { ScormFormData } from '@/types/scorm';
 
 // Generate imsmanifest.xml for SCORM 1.2
