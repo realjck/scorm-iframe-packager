@@ -103,7 +103,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             <RadioGroup
               name="packageType"
               value={formData.packageType || "iframe-with-code"}
-              onValueChange={(value) => onChange({ packageType: value })}
+              onValueChange={(value: "iframe-with-code" | "iframe-only" | "youtube") => onChange({ packageType: value })}
               className="flex flex-col space-y-2"
             >
               <div className="flex items-center space-x-2">
