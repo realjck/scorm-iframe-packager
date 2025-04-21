@@ -133,7 +133,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                 <RadioGroupItem value="iframe-only" id="iframe-only" />
                 <Label htmlFor="iframe-only">Iframe content without completion</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 opacity-50">
                 <RadioGroupItem value="youtube" id="youtube" disabled />
                 <Label htmlFor="youtube">YouTube video</Label>
               </div>

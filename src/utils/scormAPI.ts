@@ -203,13 +203,4 @@ function terminateSCORM() {
 // Initialize SCORM when the page loads
 window.addEventListener("load", initializeSCORM);
 window.addEventListener("unload", terminateSCORM);
-
-// Function to check entered code and mark as complete if correct
-function validateCompletionCode(enteredCode, correctCode) {
-  if (enteredCode.toLowerCase() === correctCode.toLowerCase()) {
-    completeSCO();
-    return true;
-  }
-  return false;
-}
 `;

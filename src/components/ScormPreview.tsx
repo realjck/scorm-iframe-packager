@@ -93,46 +93,49 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
 
   return (
     <div className="h-full flex flex-col">
-      <div 
-        className="preview-header p-4 flex items-center" 
-        style={{
-          backgroundColor: formData.headerBgColor || '#f0f0f0',
-          color: formData.headerTextColor || '#000000'
-        }}
-      >
-        {formData.logo && (
-          <img 
-            src={formData.logo} 
-            alt="Logo" 
-            className="h-8 mr-4 object-contain"
-          />
-        )}
-        <span className="mr-3">{formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
-        <Input 
-          value={enteredCode}
-          onChange={(e) => setEnteredCode(e.target.value)}
-          className="w-52 mr-2 text-black"
-          disabled={isCompleted}
-        />
-        <Button 
-          onClick={handleValidate} 
+      {/* Header only shown for iframe-with-code */}
+      {formData.packageType === 'iframe-with-code' && (
+        <div 
+          className="preview-header p-4 flex items-center" 
           style={{
-            backgroundColor: formData.buttonBgColor || '#1a57d1',
-            color: formData.buttonTextColor || '#ffffff'
+            backgroundColor: formData.headerBgColor || '#f0f0f0',
+            color: formData.headerTextColor || '#000000'
           }}
-          disabled={isCompleted}
         >
-          {formData.buttonText || "Validate"}
-        </Button>
-      </div>
+          {formData.logo && (
+            <img 
+              src={formData.logo} 
+              alt="Logo" 
+              className="h-8 mr-4 object-contain"
+            />
+          )}
+          <span className="mr-3">{formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
+          <Input 
+            value={enteredCode}
+            onChange={(e) => setEnteredCode(e.target.value)}
+            className="w-52 mr-2 text-black"
+            disabled={isCompleted}
+          />
+          <Button 
+            onClick={handleValidate} 
+            style={{
+              backgroundColor: formData.buttonBgColor || '#1a57d1',
+              color: formData.buttonTextColor || '#ffffff'
+            }}
+            disabled={isCompleted}
+          >
+            {formData.buttonText || "Validate"}
+          </Button>
+        </div>
+      )}
       
-      {showAlert && (
+      {showAlert && formData.packageType === 'iframe-with-code' && (
         <Alert className={isCompleted ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}>
           <AlertDescription>{alertMessage}</AlertDescription>
         </Alert>
       )}
       
-      {isCompleted ? (
+      {(isCompleted && formData.packageType === 'iframe-with-code') ? (
         <div className="flex-1 p-6 flex items-center justify-center">
           <div className="text-center prose dark:prose-invert">
             <ReactMarkdown>

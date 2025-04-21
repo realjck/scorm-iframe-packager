@@ -138,11 +138,11 @@ async function sha256(message: string): Promise<string> {
 
 // In the generateIndexHtml function, update the script section:
 export const generateIndexHtml = async (formData: ScormFormData): Promise<string> => {
-  const { title, iframeContent, completionCode, endMessage, scormVersion } = formData;
+  const { title, iframeContent, completionCode, endMessage, scormVersion, packageType } = formData;
   const scormApi = scormVersion === '1.2' ? scorm12ApiTemplate : scorm2004ApiTemplate;
 
-  // Hash the completion code
-  const hashedCode = await sha256(completionCode);
+  // Hash the completion code if needed
+  const hashedCode = packageType === 'iframe-with-code' ? await sha256(completionCode) : '';
 
   // Convert markdown to HTML and escape newlines for JavaScript
   const endMessageHtml = marked(endMessage || '# Module completed\n\nCongratulations! You have completed this module.');
@@ -169,6 +169,7 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
       flex-direction: column;
       height: 100%;
     }
+    ${packageType === 'iframe-with-code' ? `
     .header {
       background-color: ${formData.headerBgColor || '#f0f0f0'};
       color: ${formData.headerTextColor || '#000000'};
@@ -205,11 +206,12 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
     .header button:disabled {
       background-color: #999;
       cursor: not-allowed;
-    }
+    }` : ''}
     .content {
       flex-grow: 1;
       border: none;
     }
+    ${packageType === 'iframe-with-code' ? `
     .completion-message {
       padding: 20px;
       text-align: center;
@@ -234,17 +236,12 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
     }
     .hidden {
       display: none;
-    }
-    .status {
-      margin-left: 10px;
-      font-size: 12px;
-      font-style: italic;
-      color: #777;
-    }
+    }` : ''}
   </style>
 </head>
 <body>
   <div class="container">
+    ${packageType === 'iframe-with-code' ? `
     <div class="header">
       ${formData.logo ? `<img src="${formData.logo}" alt="Logo">` : ''}
       <span>${formData.codePromptMessage || "Please enter the code given at the end of the activity:"}</span>
@@ -257,6 +254,7 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
     <div id="completion-section" class="completion-message hidden prose dark:prose-invert">
       ${endMessageHtml}
     </div>
+    ` : ''}
     
     <iframe id="content-frame" class="content"></iframe>
   </div>
@@ -265,10 +263,13 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
     // SCORM API Implementation
     ${scormApi}
     
-    // Module variables
+    // Common variables for all package types
+    const contentFrame = document.getElementById('content-frame');
+    
+    ${packageType === 'iframe-with-code' ? `
+    // Variables for iframe-with-code mode
     const correctCodeHash = "${hashedCode}";
     let isCompleted = false;
-    const contentFrame = document.getElementById('content-frame');
     const completionSection = document.getElementById('completion-section');
     const validateBtn = document.getElementById('validate-btn');
     const codeInput = document.getElementById('completion-code');
@@ -280,8 +281,8 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
       const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-    
+    }` : ''}
+
     // Initialize content
     window.addEventListener('DOMContentLoaded', () => {
       ${contentIsUrl 
@@ -292,7 +293,8 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
           doc.close();`
       }
     });
-    
+  
+    ${packageType === 'iframe-with-code' ? `
     // Handle validation
     validateBtn.addEventListener('click', async () => {
       const enteredCode = codeInput.value.trim();
@@ -305,6 +307,7 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
         completionSection.classList.remove('hidden');
         validateBtn.disabled = true;
         codeInput.disabled = true;
+        completeSCO();
       } else {
         showAlert("${formData.alertMessageWrong || "Incorrect code. Please try again."}", false);
       }
@@ -320,7 +323,7 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
           alertEl.classList.add('hidden');
         }, 3000);
       }
-    }
+    }` : ''}
   </script>
 </body>
 </html>
