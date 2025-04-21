@@ -21,7 +21,8 @@ const defaultFormData: ScormFormData = {
   endMessage: "",
   codePromptMessage: "",
   alertMessageRight: "",
-  alertMessageWrong: ""
+  alertMessageWrong: "",
+  packageType: "iframe-with-code"
 };
 
 const Index = () => {
