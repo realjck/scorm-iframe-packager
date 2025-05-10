@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Download, RefreshCw } from 'lucide-react';
 import { ScormFormData } from '@/types/scorm';
+import packageJson from '../../package.json';
 
 interface ScormFormProps {
   formData: ScormFormData;
@@ -25,7 +26,10 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      <div className="absolute top-2 right-4">
+        <span className="text-xs text-gray-400">v{packageJson.version}</span>
+      </div>
       <div className="flex mb-6">
         <img 
           src="./assets/images/web2scorm_logo_1000px.png" 
