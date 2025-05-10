@@ -33,7 +33,6 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
           className="h-24 object-contain" 
         />
       </div>
-      <h2 className="text-1xl mb-6 text-gray-600">Create SCORM-compliant e-learning packages by embedding web content through URLs or HTML code, with completion tracking capabilities.</h2>
       
       <div className="space-y-8">
         {/* Section Manifest SCORM */}
