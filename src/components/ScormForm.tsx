@@ -105,17 +105,17 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             <h4 className="text-md font-semibold mb-4 text-blue-800">Select Package Type</h4>
             <RadioGroup
               name="packageType"
-              value={formData.packageType || "iframe-with-code"}
+              value={formData.packageType || "iframe-only"}
               onValueChange={(value: "iframe-with-code" | "iframe-only" | "youtube") => onChange({ packageType: value })}
               className="flex flex-col space-y-2"
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="iframe-with-code" id="iframe-with-code" />
-                <Label htmlFor="iframe-with-code">Iframe content with code for completion</Label>
+                <RadioGroupItem value="iframe-only" id="iframe-only" />
+                <Label htmlFor="iframe-only">Iframe content only</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="iframe-only" id="iframe-only" />
-                <Label htmlFor="iframe-only">Iframe content without completion</Label>
+                <RadioGroupItem value="iframe-with-code" id="iframe-with-code" />
+                <Label htmlFor="iframe-with-code">Iframe content with code for completion</Label>
               </div>
               <div className="flex items-center space-x-2 opacity-50">
                 <RadioGroupItem value="youtube" id="youtube" disabled />

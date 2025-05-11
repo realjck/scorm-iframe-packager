@@ -22,7 +22,7 @@ const defaultFormData: ScormFormData = {
   codePromptMessage: "",
   alertMessageRight: "",
   alertMessageWrong: "",
-  packageType: "iframe-with-code"
+  packageType: "iframe-only"
 };
 
 const Index = () => {
@@ -84,10 +84,19 @@ const Index = () => {
         return;
       }
 
-      if (!formData.completionCode) {
+      if (!formData.iframeContent) {
+        toast({
+          title: "Missing iframe Content",
+          description: "Please provide a URL or HTML code.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if ((formData.packageType === "iframe-with-code") && !formData.completionCode) {
         toast({
           title: "Missing completion code",
-          description: "Please enter a completion code.",
+          description: "Please enter an Activity completion code.",
           variant: "destructive"
         });
         return;
