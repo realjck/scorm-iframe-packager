@@ -15,10 +15,10 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
-        name: 'Nom de ton app',
-        short_name: 'Nom court',
+        name: 'web2scorm',
+        short_name: 'web2scorm',
         start_url: '.',
         display: 'standalone',
         background_color: '#ffffff',
