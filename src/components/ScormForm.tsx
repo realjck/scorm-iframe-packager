@@ -4,9 +4,15 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Download, RefreshCw } from 'lucide-react';
+import { Download, RefreshCw, Info } from 'lucide-react';
 import { ScormFormData } from '@/types/scorm';
 import packageJson from '../../package.json';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ScormFormProps {
   formData: ScormFormData;
@@ -31,17 +37,33 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
         <span className="text-xs text-gray-400">v{packageJson.version}</span>
       </div>
       <div className="flex mb-6">
-        <img 
-          src="./assets/images/web2scorm_logo_1000px.png" 
-          alt="Web2SCORM Logo" 
-          className="h-24 object-contain" 
-        />
+        <a href="https://web2scorm.pxly.fr" title="Homepage">
+          <img 
+            src="./assets/images/web2scorm_logo_1000px.png" 
+            alt="Web2SCORM Logo" 
+            className="h-24 object-contain" 
+          />
+        </a>
       </div>
       
       <div className="space-y-8">
         {/* Section Manifest SCORM */}
         <div className="rounded-lg border border-gray-400 p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-700">📄 SCORM Manifest</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-700 flex items-center">
+            📄 SCORM Manifest
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="ml-2 cursor-help">
+                    <Info size={16} className="text-gray-500" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>This section configures the imsmanifest.xml file of the SCORM package, which contains metadata about the learning content.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </h3>
           <div className="space-y-6">
             <div>
               <p className="mb-2">Version:</p>
@@ -98,7 +120,21 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
 
         {/* Package Content Section */}
         <div className="rounded-lg border border-gray-400 p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-700">📦 Package Content</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-700 flex items-center">
+            📦 Package Content
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="ml-2 cursor-help">
+                    <Info size={16} className="text-gray-500" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Choose a package type and provide a URL or content. The right side of the screen will display a preview of this content.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </h3>
           
           {/* Package Type Selection */}
           <div className="rounded-lg border-2 border-blue-400 p-4 bg-blue-50 mb-6">
