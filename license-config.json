@@ -1,0 +1,14 @@
+{
+    "license": "./LICENSE.txt",
+    "licenseFormats": {
+      "js|ts|jsx|tsx": {
+        "eachLine": {
+          "prepend": " * "
+        },
+        "prepend": "/**\n",
+        "append": " */"
+      }
+    },
+    "ignoreFile": ".gitignore"
+  }
+  
