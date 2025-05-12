@@ -64,7 +64,7 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
   const renderIframeContent = () => {
     const content = formData.iframeContent;
     
-    if (!content) return;
+    if (!content || content.length <= 8) return;
     
     if (iframeRef.current) {
       const iframe = iframeRef.current;
@@ -144,12 +144,25 @@ const ScormPreview = forwardRef<any, ScormPreviewProps>(({ formData }, ref) => {
           </div>
         </div>
       ) : (
+        <>
+          {!formData.iframeContent ? (
+        <div className="flex-1 bg-gray-900 flex items-center justify-center">
+          <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md text-center">
+            <h2 className="text-xl font-semibold text-white mb-4">No Content Available</h2>
+            <p className="text-gray-300">
+              Please enter a URL or HTML code in the "Iframe content" field to see the preview.
+            </p>
+          </div>
+        </div>
+      ) : (
         <iframe 
           ref={iframeRef}
           className="iframe-preview flex-1 w-full"
           title="SCORM Content Preview"
           sandbox="allow-scripts allow-same-origin"
         ></iframe>
+      )}
+        </>
       )}
     </div>
   );
