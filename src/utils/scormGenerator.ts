@@ -282,6 +282,16 @@ export const generateIndexHtml = async (formData: ScormFormData): Promise<string
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }` : ''}
 
+    ${packageType === 'iframe-only' && formData.autoCompleteEnabled ? `
+    // Auto-completion timer for iframe-only mode
+    const autoCompleteDuration = ${parseInt(formData.autoCompleteDuration || "0", 10)};
+    if (autoCompleteDuration > 0) {
+      setTimeout(() => {
+        completeSCO();
+      }, autoCompleteDuration * 60 * 1000);
+    }
+    ` : ''}
+
     // Initialize content
     window.addEventListener('DOMContentLoaded', () => {
       ${contentIsUrl 

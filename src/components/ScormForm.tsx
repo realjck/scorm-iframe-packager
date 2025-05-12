@@ -85,7 +85,7 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="title" className="mb-2 block">SCORM manifest title:</Label>
+              <Label htmlFor="title" className="mb-2 block">Title:</Label>
               <Input
                 id="title"
                 name="title"
@@ -95,22 +95,25 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
             </div>
 
             <div>
-              <Label htmlFor="description" className="mb-2 block">SCORM manifest description:</Label>
+              <Label htmlFor="description" className="mb-2 block">Description:</Label>
               <Textarea
                 id="description"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                placeholder="SCORM content generated with Web2SCORM"
+                placeholder="SCORM content generated with web2scorm"
                 className="min-h-[80px]"
               />
             </div>
 
             <div>
-              <Label htmlFor="duration" className="mb-2 block">SCORM manifest duration in minutes (e.g., 30):</Label>
+              <Label htmlFor="duration" className="mb-2 block">Duration (minutes):</Label>
               <Input
                 id="duration"
                 name="duration"
+                type="number"
+                min={1}
+                placeholder='e.g., 60'
                 value={formData.duration}
                 onChange={handleChange}
               />
@@ -184,6 +187,37 @@ const ScormForm = ({ formData, onChange, onDownload, onReset, onResetPreview }: 
                   placeholder="URL or HTML code"
                   className="min-h-[120px]"
                 />
+
+                {formData.packageType === "iframe-only" && (
+                  <div className="mt-4 space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="autoCompleteEnabled"
+                        name="autoCompleteEnabled"
+                        checked={formData.autoCompleteEnabled}
+                        onChange={(e) => onChange({ autoCompleteEnabled: e.target.checked })}
+                        className="h-4 w-4"
+                      />
+                      <Label htmlFor="autoCompleteEnabled">Auto-complete after duration</Label>
+                    </div>
+                    
+                    {formData.autoCompleteEnabled && (
+                      <div>
+                        <Label htmlFor="autoCompleteDuration" className="mb-2 block">Duration before auto-complete (minutes):</Label>
+                        <Input
+                          id="autoCompleteDuration"
+                          name="autoCompleteDuration"
+                          type="number"
+                          min="1"
+                          value={formData.autoCompleteDuration}
+                          onChange={handleChange}
+                          placeholder="e.g., 30"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

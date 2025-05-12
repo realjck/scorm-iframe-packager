@@ -17,4 +17,6 @@ export interface ScormFormData {
   logo?: string; // base64 string
   packageType: "iframe-with-code" | "iframe-only" | "youtube";
   youtubeVideoId?: string;
+  autoCompleteEnabled?: boolean;
+  autoCompleteDuration?: string;
 }

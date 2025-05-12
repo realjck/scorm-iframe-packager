@@ -57,7 +57,7 @@ export const generateScorm12Manifest = (formData: ScormFormData): string => {
 export const generateScorm2004Manifest = (formData: ScormFormData): string => {
   const uniqueId = "SCORM_" + Date.now();
   const title = formData.title || "SCORM Module";
-  const description = formData.description || "SCORM content generated with Web2SCORM";
+  const description = formData.description || "SCORM content generated with web2scorm";
 
   return `<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <manifest identifier="${uniqueId}" version="1"
